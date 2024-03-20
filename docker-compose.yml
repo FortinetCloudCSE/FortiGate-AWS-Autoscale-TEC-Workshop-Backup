@@ -1,7 +1,7 @@
 services:
   server:
       image: fortinet-hugo:latest
-      command: server --watch -DF --poll 700ms --verbose
+      command: server --disableFastRender --watch -DF --poll 700ms --verbose
       volumes:
         - ./content:/home/CentralRepo/content
         - ./config.toml:/home/CentralRepo/config.toml

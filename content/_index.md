@@ -1,26 +1,23 @@
 ---
-title: "Fortinet TECWorkshop Template - MVP1"
-menuTitle: "TECWorkshop Template"
+title: "Deploying FortiGate Autoscale Templates in AWS"
 weight: 1
-archetype: home
 ---
 
-### Welcome!
+# Deploying FortiGate Autoscale Templates in AWS (latest build: 11)
 
+## Welcome!
 
-This site will explain how to use the [Hugo Web Framework]("https://gohugo.io/") & the ["reLearn" Theme]("https://mcshelby.github.io/hugo-theme-relearn/index.html") to effectively organize & deliver Fortinet TEC Workshops & Product demos in a consistent, simple, and visually appealing format.
+AWS Software-Defined Networking (SDN) is elastic, complex, and quite different from traditional on-premise networking. In this workshop you will learn how to deploy FortiGate Firewalls in an elastic autoscale group to protect your AWS workloads deployed in common architecture patterns.
 
-The beauty of this framework lies in its simplicity.  Within approx 30 mins, anybody can have a site up and running.  Content is created via Markdown files, and the workshop guide layout is simply a directory structure.
+This workshop is intended to help accomplish the following:
 
-Follow along on this simple tutorial to get up and running with a Hugo formatted site for your TEC Workshop/training/demo content today!
+  * Learn common AWS networking concepts such as routing traffic in and out of VPCs for various traffic flows
+  * Use AWS Cloudshell and Terraform to deploy a Fortigate autoscale group in a usable demo environment
+  * Interact with a FortiGate autoscale group build security policy sets, and deploy them
+  * Test traffic flows in an example environment and use a FortiGate autoscale group to control traffic flows
+  * Configure FortiManager to manage FortiGate CNF instances
+  * Configure FortiAnalyzer to collect and analyze logs from a FortiGate autoscale group
+  * Learn how to use a FortiGate autoscale group to protect AWS workloads in common architecture patterns
+  * Configure SDN Connectors to integrate a FortiGate autoscale group with VPC Tagged objects and dynamic policy creation
+  * Deploy a FortiGate autoscale group into an existing customer environment. This is different from deploying a FortiGate autoscale group in a demo environment, as it requires the use of existing AWS resources and VPCs. This would be a common use case for a customer who wants to protect their existing AWS workloads with FortiGate autoscale group.
 
-### Learning Objectives
-- Setup UserRepo on your system & Build container with Hugo & CentralRepo
-- Learn to work in Hugo to create your content to display proper information flow for your TEC Workshop/demo/training
-- Publish your Hugo site to GitHub pages via a CI/CD model 
- 
-### Hugo and Fortinet TECWorkshops - Visually
-- The purpose of this workflow is to simplify creation of Fortinet TECWorkshop guides while providing an example CI/CD development environment with maximum re-usability 
-- Here's a visual representation of our process which will be fully explained in each chapter
-
-{{< FTNThugoFlow >}}

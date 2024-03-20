@@ -1,7 +1,7 @@
 # this is a required setting for this theme to appear on https://themes.gohugo.io/
 # change this to a value appropriate for you; if your site is served from a subdirectory
 # set it like "https://example.com/mysite/"
-baseURL = "https://fortinetcloudcse.github.io/UserRepo/"
+baseURL = "https://fortinetcloudcse.github.io/FortiGate-AWS-Autoscale-TEC-Workshop/"
 googleAnalytics = "G-5RZBH288ST"
 
 languageCode = "en-US"
@@ -87,17 +87,16 @@ enableEmoji = true
   #logoBannerText="Custom Logo Banner"
 
   # Optional: If you'd like additional logo sub text/descriptions, use logoBannerSubText Parameter.  leave empty string to omit: ""
-  logoBannerSubText="sample sub-banner text"
-
+  logoBannerSubText="How to Demo FortiGate Autoscale on AWS"
 
   # Prefix URL to edit current page. Will display an "Edit this page" button on top right hand corner of every page. 
   # Useful to give opportunity to people to create merge request for your doc.
   # See the config.toml file from this documentation site to have an example.
   #editURL = ""
   # Author of the site, will be used in meta information
-  author = "Jeff Kopko"
+  author = "Mike Wooten"
   # Description of the site, will be used in meta information
-  description = "Hugo for Fortinet TEC Workshops"
+  description = "Hugo for Fortinet AWS Autoscale TEC Workshops"
   # Shows a checkmark for visited pages on the menu
   showVisitedLinks = true
   # Disable search function. It will hide search bar
