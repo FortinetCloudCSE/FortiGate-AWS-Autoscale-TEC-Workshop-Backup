@@ -23,6 +23,9 @@ runuser -l ubuntu -c 'mkdir ~/bin'
 runuser -l ubuntu -c 'ln -s ~/.tfenv/bin/* ~/bin'
 runuser -l ubuntu -c 'tfenv install 1.7.5'
 runuser -l ubuntu -c 'tfenv use 1.7.5'
+runuser -l ubuntu -c 'export PATH=$PATH:~/bin >> ~/.bashrc'
+
+
 
 
 
