@@ -3,7 +3,7 @@ title: "Deploying FortiGate Autoscale Templates in AWS"
 weight: 1
 ---
 
-# Deploying FortiGate Autoscale Templates in AWS (latest build: 11)
+# Deploying FortiGate Autoscale Templates in AWS (build: 11)
 
 ## Welcome!
 

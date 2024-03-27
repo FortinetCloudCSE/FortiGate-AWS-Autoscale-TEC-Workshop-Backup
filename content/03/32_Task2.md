@@ -17,7 +17,7 @@ weight: 1
 
 * Clone a repository that uses terraform to create a distributed ingress workload vpc
 
-  ``` git clone https://github.com/FortinetCloudCSE/FortiGate-AWS-Autoscale-AWS-TEC-Workshop.git ```
+  ``` git clone https://github.com/FortinetCloudCSE/FortiGate-AWS-Autoscale-TEC-Workshop.git ```
 
 * Change directory into the newly created repository for distributed_ingress_nlb
 

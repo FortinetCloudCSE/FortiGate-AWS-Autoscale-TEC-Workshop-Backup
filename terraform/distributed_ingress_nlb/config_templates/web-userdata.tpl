@@ -18,6 +18,12 @@ sudo sed -i 's/^#input(type="imudp" port="514")/input(type="imudp" port="514")/'
 sudo service rsyslog restart
 echo 'Welcome to ${region}${availability_zone} Fortigate CNF Workshop Demo' > /var/www/html/demo.txt
 echo 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*%' > /var/www/html/eicar.com.txt
+runuser -l -c 'git clone https://github.com/tfutils/tfenv.git ~/.tfenv'
+runuser -l ubuntu -c 'mkdir ~/bin'
+runuser -l ubuntu -c 'ln -s ~/.tfenv/bin/* ~/bin'
+runuser -l ubuntu -c 'tfenv install 1.7.5'
+runuser -l ubuntu -c 'tfenv use 1.7.5'
+echo 'export PATH="$HOME/bin:$PATH"' >> /home/ubuntu/.bashrc
 
 
 

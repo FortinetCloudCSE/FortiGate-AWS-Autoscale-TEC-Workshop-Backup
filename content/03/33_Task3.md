@@ -3,7 +3,7 @@ title: "Task 3: Deploy a standard configuration FortiGate Autoscale group"
 weight: 1
 ---
 
-* Log into your AWS account and navigate to the [**Console Home**](https://us-west-2.console.aws.amazon.com/console/home?region=us-west-2#).
+* This task will deploy a FortiGate Autoscale group and install gateway load balancer endpoints (GWLBe) in the appropriate subnets of the distributed ingress workload vpc. Unfortunately, we will not be able to deploy the FortiGate Autoscale Group template from within AWS Cloudshell due to the 1GB disk space limitation of Cloudshell. If you take a look at the network diagram of the distributed ingress workload vpc, you will see that a linux ec2 instance was deployed in AZ1 with a public EIP address. This public IP address should be in the output of the template and you should have this saved in your scratchpad that was saved in the previous task. This ec2 instance is preconfigured with terraform and we will use this instance to clone and deploy the FortiGate Autoscale Group. 
 
 {{% notice info %}}
 **Note:** Make sure you are running this workshop in the intended region. The defaults are configured to run this workshop in us-west-2 (Oregon). Make sure your management console is running in us-west-2 (Oregon), unless you intend to run the workshop in a different FortiGate CNF supported region.
