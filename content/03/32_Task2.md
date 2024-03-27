@@ -1,5 +1,5 @@
 ---
-title: "Task 2: Deploy a standard configuration FortiGate Autoscale group using Terraform in AWS Cloudshell"
+title: "Task 2: Create Distributed Workload VPC using Terraform in AWS Cloudshell"
 weight: 1
 ---
 
@@ -17,15 +17,15 @@ weight: 1
 
 * Clone a repository that uses terraform to create a distributed ingress workload vpc
 
-  ``` git clone https://github.com/fortinetdev/terraform-aws-cloud-modules.git ```
+  ``` git clone https://github.com/FortinetCloudCSE/FortiGate-AWS-Autoscale-AWS-TEC-Workshop.git ```
 
-* Change directory into the newly created repository and move to the examples/spk_tgw_gwlb_asg_fgt_igw directory. This directory will deploy a standard centralized egress architecture with a FortiGate Autoscale group. 
+* Change directory into the newly created repository for distributed_ingress_nlb
 
-  ``` cd terraform-aws-cloud-modules/examples/spk_tgw_gwlb_asg_fgt_igw ```
+  ``` cd FortiGate-AWS-Autoscale-TEC-Workshop/terraform/distributed_ingress_nlb ```
   
 * Copy the terraform.tfvars.example to terraform.tfvars
 
-  ``` cp terraform.tfvars.txt terraform.tfvars ```
+  ``` cp terraform.tfvars.example terraform.tfvars ```
   
 ![](image-t2-2.png)
 
@@ -78,4 +78,3 @@ The network diagram for the distributed ingress vpc looks like this:
 ![](image-distriuted-ingress-with-nlb.png)
 
 * This concludes this section.
-

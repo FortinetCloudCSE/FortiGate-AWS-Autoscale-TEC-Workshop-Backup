@@ -1,0 +1,21 @@
+# Created by .ignore support plugin (hsz.mobi)
+**/.DS_Store
+*~
+**/.idea
+**/__pycache__
+**/*.pyc
+**/venv
+**/site-packages
+**/.terraform
+**/.terraform.lock.hcl
+**/terraform.tfstate
+**/terraform.tfstate.backup
+\#*#
+*.swp
+*.pyc
+debug.log
+terraform.tfvars
+.repo_conf/*.retry
+**/.idea
+**/__pycache__
+ncc-service-account.json
