@@ -5,21 +5,18 @@ weight: 1
 
 * This task will deploy a FortiGate Autoscale group and install gateway load balancer endpoints (GWLBe) in the appropriate subnets of the distributed ingress workload vpc. Unfortunately, we will not be able to deploy the FortiGate Autoscale Group template from within AWS Cloudshell due to the 1GB disk space limitation of Cloudshell. If you take a look at the network diagram of the distributed ingress workload vpc, you will see that a linux ec2 instance was deployed in AZ1 with a public EIP address. This public IP address should be in the output of the template and you should have this saved in your scratchpad that was saved in the previous task. This ec2 instance is preconfigured with terraform and we will use this instance to clone and deploy the FortiGate Autoscale Group. 
 
-{{% notice info %}}
-**Note:** Make sure you are running this workshop in the intended region. The defaults are configured to run this workshop in us-west-2 (Oregon). Make sure your management console is running in us-west-2 (Oregon), unless you intend to run the workshop in a different FortiGate CNF supported region.
-{{% /notice %}}
-
 ![](image-t3-0.png)
 
-* Click on the AWS CloudShell icon on the console navigation bar
+* ssh into the Linux instance in AZ1 using the command in your scratchpad.
 
+  ``` ssh -i <keypair> ubuntu@<public-ip> ```
 ![](image-t3-1.png)
 
-* Clone a repository that uses terraform to create a distributed ingress workload vpc
+* Clone build 11 of the autoscale templates repository that uses terraform to create a distributed ingress workload vpc.
 
   ``` git clone https://github.com/fortinetdev/terraform-aws-cloud-modules.git ```
 
-* Change directory into the newly created repository and move to the examples/spk_tgw_gwlb_asg_fgt_igw directory. This directory will deploy a standard centralized egress architecture with a FortiGate Autoscale group. 
+* Change directory into the newly created repository and move to the examples/spk_gwlb_asg_fgt_gwlb_igw directory. This directory will deploy a Fortigate Autoscale group with a Gateway Load Balancer and gateway load balancer endpoints in the appropriate subnets of the distributed ingress workload vpc. 
 
   ``` cd terraform-aws-cloud-modules/examples/spk_tgw_gwlb_asg_fgt_igw ```
   
@@ -29,7 +26,7 @@ weight: 1
   
 ![](image-t3-2.png)
 
-* Edit the terraform.tfvars file. If you are using AWS Cloudshell, then your credentials are already exported into the shell environment. If you are not using AWS Cloudshell, then I recommend exporting your AWS credentials into your environment and not hard-coding your credentials into the terraform.tfvars file. You can find more information here: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
+* Edit the terraform.tfvars file. If you are not using AWS Cloudshell, then I recommend exporting your AWS credentials into your environment and not hard-coding your credentials into the terraform.tfvars file. You can find more information here: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 
 {{% notice tip %}}
 **Note:** You can find more information on exporting your AWS credentials into your environment here: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envars.html

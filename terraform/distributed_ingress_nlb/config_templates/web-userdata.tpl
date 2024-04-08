@@ -6,6 +6,7 @@ sudo apt -y install net-tools
 sudo apt -y install iperf3
 sudo apt -y install apache2
 sudo apt -y install lnav
+sudo apt -y awscli
 sudo ufw allow 'Apache'
 sudo sed -i 's/It works!/It works for ${region}${availability_zone}!/' /var/www/html/index.html
 sudo systemctl start apache2
@@ -24,7 +25,9 @@ runuser -l ubuntu -c 'ln -s ~/.tfenv/bin/* ~/bin'
 runuser -l ubuntu -c 'tfenv install 1.7.5'
 runuser -l ubuntu -c 'tfenv use 1.7.5'
 runuser -l ubuntu -c 'export PATH=$PATH:~/bin >> ~/.bashrc'
-
+runuser -l ubuntu -c 'export PATH=$PATH:~/bin >> ~/.bashrc'
+runuser -l ubuntu -c 'export AWS_ACCESS_KEY_ID=`aws --profile default configure get aws_access_key_id` >> ~/.bashrc'
+runuser -l ubuntu -c 'export AWS_SECRET_ACCESS_KEY=`aws --profile default configure get aws_secret_access_key` >> ~/.bashrc'
 
 
 

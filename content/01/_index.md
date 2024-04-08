@@ -72,7 +72,6 @@ These are the AWS and Fortinet components that will be used during this workshop
 This is the architecture and environment that will be used in the workshop.
 
   * With AWS networking, there are several ways to organize your AWS architecture to take advantage of FortiGate CNF traffic inspection. The important point to know is that as long as the traffic flow has a symmetrical routing path (for forward and reverse flows), the architecture will work.
-
   * This diagram will highlight two main designs that are common architecture patterns for securing traffic flows.
   * Distributed Ingress + Egress**
   * Centralized Egress + East-West**

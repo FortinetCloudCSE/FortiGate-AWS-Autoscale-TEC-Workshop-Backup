@@ -8,8 +8,6 @@ In this section, we will introduce the prerequisites for this workshop.
 To complete the workshop, you will need an understanding of the following concepts and access to the following resources:
 
 * An AWS Account with access to the us-west-2 region (Oregon)
-* A FortiCloud account
-* A FortiGate CNF subscription
 * AWS Networking Concepts
     * VPCs
     * Availability Zones (AZ's)
