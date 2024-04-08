@@ -25,9 +25,13 @@ runuser -l ubuntu -c 'ln -s ~/.tfenv/bin/* ~/bin'
 runuser -l ubuntu -c 'tfenv install 1.7.5'
 runuser -l ubuntu -c 'tfenv use 1.7.5'
 runuser -l ubuntu -c 'export PATH=$PATH:~/bin >> ~/.bashrc'
+<<<<<<< HEAD
 runuser -l ubuntu -c 'export PATH=$PATH:~/bin >> ~/.bashrc'
 runuser -l ubuntu -c 'export AWS_ACCESS_KEY_ID=`aws --profile default configure get aws_access_key_id` >> ~/.bashrc'
 runuser -l ubuntu -c 'export AWS_SECRET_ACCESS_KEY=`aws --profile default configure get aws_secret_access_key` >> ~/.bashrc'
+=======
+
+>>>>>>> a7043b9a6d1314f108e3d9a9188052f75333ddee
 
 
 
