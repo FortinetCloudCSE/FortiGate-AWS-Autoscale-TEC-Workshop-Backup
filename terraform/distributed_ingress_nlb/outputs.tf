@@ -69,3 +69,18 @@ output "az2_ssh" {
     error_message = "No public ssh IP"
   }
 }
+
+output "fgt_spoke_info" {
+  value = <<FGTSPOKE
+
+    spk_vpc = {
+        "spk_vpc1" = {
+            vpc_id = ${module.vpc-main.vpc_id},
+            gwlbe_subnet_ids = [
+                ${module.subnet-public-az1.id},
+                ${module.subnet-public-az2.id}
+            ],
+        }
+    }
+  FGTSPOKE
+}
