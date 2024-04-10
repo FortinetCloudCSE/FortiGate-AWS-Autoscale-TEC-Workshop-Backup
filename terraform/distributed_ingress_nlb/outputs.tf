@@ -8,9 +8,9 @@ output "public_subnet_id_az1" {
   description = "The Public Subnet ID for spoke vpc"
 }
 
-output "fwaas_subnet_id_az1" {
-  value       = module.subnet-fwaas-az1.id
-  description = "The fwaas Subnet ID in az1 vpc"
+output "gwlbe_subnet_id_az1" {
+  value       = module.subnet-gwlbe-az1.id
+  description = "The gwlbe Subnet ID in az1 vpc"
 }
 output "private_subnet_id_az1" {
   value       = module.subnet-private-az1.id
@@ -22,9 +22,9 @@ output "public_subnet_id_az2" {
   description = "The Public Subnet ID for spoke vpc"
 }
 
-output "fwaas_subnet_id_az2" {
-  value       = module.subnet-fwaas-az2.id
-  description = "The Private Subnet ID for app vpc"
+output "gwlbe_subnet_id_az2" {
+  value       = module.subnet-gwlbe-az2.id
+  description = "The gwlbe Subnet ID for app vpc"
 }
 output "private_subnet_id_az2" {
   value       = module.subnet-private-az2.id

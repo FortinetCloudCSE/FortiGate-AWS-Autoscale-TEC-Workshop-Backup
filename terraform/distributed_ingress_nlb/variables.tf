@@ -32,8 +32,8 @@ variable "public_subnet_index" {
   description = "Index of the public subnet"
   default = 0
 }
-variable "fwaas_subnet_index" {
-  description = "Index of the private subnet"
+variable "gwlbe_subnet_index" {
+  description = "Index of the gwlbe subnet"
   default = 1
 }
 variable "private_subnet_index" {

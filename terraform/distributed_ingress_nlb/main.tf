@@ -25,10 +25,10 @@ locals {
   public_subnet_cidr_az2 = cidrsubnet(var.vpc_cidr, var.subnet_bits, var.public_subnet_index + 3)
 }
 locals {
-  fwaas_subnet_cidr_az1 = cidrsubnet(var.vpc_cidr, var.subnet_bits, var.fwaas_subnet_index)
+  gwlbe_subnet_cidr_az1 = cidrsubnet(var.vpc_cidr, var.subnet_bits, var.gwlbe_subnet_index)
 }
 locals {
-  fwaas_subnet_cidr_az2 = cidrsubnet(var.vpc_cidr, var.subnet_bits, var.fwaas_subnet_index + 3)
+  gwlbe_subnet_cidr_az2 = cidrsubnet(var.vpc_cidr, var.subnet_bits, var.gwlbe_subnet_index + 3)
 }
 locals {
   private_subnet_cidr_az1 = cidrsubnet(var.vpc_cidr, var.subnet_bits, var.private_subnet_index)
@@ -90,19 +90,19 @@ resource aws_ec2_tag "subnet_public_tag_az1" {
   value = "Public-Az1"
 }
 
-module "subnet-fwaas-az1" {
+module "subnet-gwlbe-az1" {
   source = "git::https://github.com/40netse/terraform-modules.git//aws_subnet"
-  subnet_name                = "${var.cp}-${var.env}-${var.vpc_name}-fwaas-az1"
+  subnet_name                = "${var.cp}-${var.env}-${var.vpc_name}-gwlbe-az1"
 
   vpc_id                     = module.vpc-main.vpc_id
   availability_zone          = local.availability_zone_1
-  subnet_cidr                = local.fwaas_subnet_cidr_az1
+  subnet_cidr                = local.gwlbe_subnet_cidr_az1
 }
 
-resource aws_ec2_tag "subnet_fwaas_tag_az1" {
-  resource_id = module.subnet-fwaas-az1.id
+resource aws_ec2_tag "subnet_gwlbe_tag_az1" {
+  resource_id = module.subnet-gwlbe-az1.id
   key = "Workshop-area"
-  value = "Fwaas-Az1"
+  value = "Gwlbe-Az1"
 }
 
 module "subnet-private-az1" {
@@ -130,17 +130,17 @@ module "private-route-table-association-az1" {
   subnet_ids                 = module.subnet-private-az1.id
   route_table_id             = module.private-route-table-az1.id
 }
-module "fwaas-route-table-az1" {
+module "gwlbe-route-table-az1" {
   source  = "git::https://github.com/40netse/terraform-modules.git//aws_route_table"
-  rt_name = "${var.cp}-${var.env}-fwaas-rt-az1"
+  rt_name = "${var.cp}-${var.env}-gwlbe-rt-az1"
 
   vpc_id                     = module.vpc-main.vpc_id
 }
-module "fwaas-route-table-association-az1" {
+module "gwlbe-route-table-association-az1" {
   source   = "git::https://github.com/40netse/terraform-modules.git//aws_route_table_association"
 
-  subnet_ids                 = module.subnet-fwaas-az1.id
-  route_table_id             = module.fwaas-route-table-az1.id
+  subnet_ids                 = module.subnet-gwlbe-az1.id
+  route_table_id             = module.gwlbe-route-table-az1.id
 }
 
 #
@@ -159,26 +159,26 @@ resource aws_ec2_tag "subnet_public_tag_az2" {
   key = "Workshop-area"
   value = "Public-Az2"
 }
-module "subnet-fwaas-az2" {
+module "subnet-gwlbe-az2" {
   source = "git::https://github.com/40netse/terraform-modules.git//aws_subnet"
-  subnet_name                = "${var.cp}-${var.env}-${var.vpc_name}-fwaas-az2"
+  subnet_name                = "${var.cp}-${var.env}-${var.vpc_name}-gwlbe-az2"
 
   vpc_id                     = module.vpc-main.vpc_id
   availability_zone          = local.availability_zone_2
-  subnet_cidr                = local.fwaas_subnet_cidr_az2
+  subnet_cidr                = local.gwlbe_subnet_cidr_az2
 }
-resource aws_ec2_tag "subnet_fwaas_tag_az2" {
-  resource_id = module.subnet-fwaas-az2.id
+resource aws_ec2_tag "subnet_gwlbe_tag_az2" {
+  resource_id = module.subnet-gwlbe-az2.id
   key = "Workshop-area"
-  value = "Fwaas-Az2"
+  value = "Gwlbe-Az2"
 }
-resource aws_ec2_tag "fwaas_tag_az1" {
-  resource_id = module.subnet-fwaas-az1.id
+resource aws_ec2_tag "gwlbe_tag_az1" {
+  resource_id = module.subnet-gwlbe-az1.id
   key = "fortigatecnf_subnet_type"
   value = "endpoint"
 }
-resource aws_ec2_tag "fwaas_tag_az2" {
-  resource_id = module.subnet-fwaas-az2.id
+resource aws_ec2_tag "gwlbe_tag_az2" {
+  resource_id = module.subnet-gwlbe-az2.id
   key = "fortigatecnf_subnet_type"
   value = "endpoint"
 }
@@ -221,17 +221,17 @@ module "private-route-table-association" {
   subnet_ids                 = module.subnet-private-az2.id
   route_table_id             = module.private-route-table-az2.id
 }
-module "fwaas-route-table-az2" {
+module "gwlbe-route-table-az2" {
   source  = "git::https://github.com/40netse/terraform-modules.git//aws_route_table"
-  rt_name = "${var.cp}-${var.env}-fwaas-rt-az2"
+  rt_name = "${var.cp}-${var.env}-gwlbe-rt-az2"
 
   vpc_id                     = module.vpc-main.vpc_id
 }
-module "fwaas-route-table-association" {
+module "gwlbe-route-table-association" {
   source   = "git::https://github.com/40netse/terraform-modules.git//aws_route_table_association"
 
-  subnet_ids                 = module.subnet-fwaas-az2.id
-  route_table_id             = module.fwaas-route-table-az2.id
+  subnet_ids                 = module.subnet-gwlbe-az2.id
+  route_table_id             = module.gwlbe-route-table-az2.id
 }
 
 module "public-route-table-association-az1" {
@@ -276,13 +276,13 @@ resource "aws_route" "private-az2-default-route" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = module.vpc-igw.igw_id
 }
-resource "aws_route" "fwaas-az1-default-route" {
-  route_table_id         = module.fwaas-route-table-az1.id
+resource "aws_route" "gwlbe-az1-default-route" {
+  route_table_id         = module.gwlbe-route-table-az1.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = module.vpc-igw.igw_id
 }
-resource "aws_route" "fwaas-az2-default-route" {
-  route_table_id         = module.fwaas-route-table-az2.id
+resource "aws_route" "gwlbe-az2-default-route" {
+  route_table_id         = module.gwlbe-route-table-az2.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = module.vpc-igw.igw_id
 }
@@ -296,7 +296,7 @@ resource "aws_eip" "nlb_eip" {
 }
 
 resource "aws_lb" "public_nlb_az1" {
-  name = "${var.cp}-${var.env}-${var.vpc_name}-fwaas-az2"
+  name = "${var.cp}-${var.env}-${var.vpc_name}-gwlbe-az2"
   internal = false
   load_balancer_type = "network"
   enable_cross_zone_load_balancing = false

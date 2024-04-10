@@ -14,7 +14,7 @@ subnet_bits                 = 8
 # e.g. index 1 in 10.0.0.0/16 is 10.0.1.0/24
 #
 public_subnet_index         = 0
-fwaas_subnet_index          = 1
+gwlbe_subnet_index          = 1
 private_subnet_index        = 2
 
 #
