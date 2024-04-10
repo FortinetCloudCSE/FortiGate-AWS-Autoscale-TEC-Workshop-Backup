@@ -128,14 +128,11 @@ weight: 1
 
 ``` terraform apply --auto-approve ```
 
-![](image-t3-5a.png)
-
 * When the command completes, verify "Apply Complete" and valid output statements.
 
-![](image-t3-5b.png)
+![](image-t3-5a.png)
 
-
-The network diagram for the distributed ingress vpc looks like this:
+The network diagram for the FortiGate Autoscale Security VPC with the distributed ingress vpc with GWLB endpoints deployed looks like this:
 
 ![](image-distriuted-ingress-with-nlb.png)
 
