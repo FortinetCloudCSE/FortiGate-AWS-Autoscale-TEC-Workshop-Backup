@@ -12,6 +12,24 @@ weight: 1
   ``` ssh -i <keypair> ubuntu@<public-ip> ```
 ![](image-t3-1.png)
 
+* First task is to provide the ec2 instance with your AWS account credentials. This will provide the necessary permissions to run the autoscale terraform templates. 
+  * from the command line, run the aws configure and enter your access key, access secret, default region, and preferred output (text, json).
+  
+  ``` aws configure ```
+  
+![](image-t3-1a.png)
+
+* The ec2 instance has been pre-configured to export your AWS credentials into the login environment variables. If you would like to investigate the specifics, see the web-userdata.tpl file in the config_templates directory of the templates we deployed in task 2. In order to export the credentials, we will need to logout and login again. Please check the values for the proper credentials.
+
+    ``` exit ```
+
+    ``` ssh -i <keypair> ubuntu@<public-ip> ```
+
+    ``` env ```
+
+![](image-t3-1b.png)
+![](image-t3-1c.png)
+
 * Clone build 11 of the autoscale templates repository that uses terraform to create a distributed ingress workload vpc.
 
   ``` git clone https://github.com/fortinetdev/terraform-aws-cloud-modules.git ```
@@ -54,11 +72,7 @@ weight: 1
 * Fill in the cidr_block you want to use for each spoke_vpc. Create  the spoke_cidr_list as a terraform list. 
 * Create a terraform list for the set of availability_zones you want to use.
 
-* ![](image-t3-3.png)
-
-* Fill in a tgw_name and tgw_description. 
-
-* ![](image-t3-4.png)
+![](image-t3-3.png)
 
 * Fill in the desired fgt_intf_mode. 1-arm mode uses a single Fortigate ENI and hairpins the traffic in and out of the same ENI. 2-arm mode uses two Fortigate ENIs and allows for a more traditional routing configuration via a public and private interface. 
 * This workshop will use the 2-arm mode. 
@@ -93,11 +107,14 @@ weight: 1
   
 * The scale policies control the scaling of the autoscale groups. The scale policies are based on the average CPU utilization of the autoscale group. The scale policies are set to scale out when the average CPU utilization is greater than 80% and scale in when the average CPU utilization is less than 20%. The scale policies are set to scale out and in by 1 instance. This workshop will leave the scaling policies as is.
 
+
   ![](image-t3-7.png)
 
-* Set enable_cross_zone_load_balancing to true. This will allow the Gateway Load Balancer to distribute traffic across all instances in all availability zones. 
-* Set enable_east_west_inspection to true. This will allow the Fortigate Autoscale group to inspect traffic between the spoke VPCs and the internet.
+* Set enable_cross_zone_load_balancing to true. This will allow the Gateway Load Balancer to distribute traffic across all instances in all availability zones.
+* Copy the spk_vpc section from your scratchpad and paste it into the tfvars file.
 * Set general_tags to anything you like. Each resource created by the template will have these tags.
+* As you can see in the example tfvars file, there are many options (commented out) for configuring the route tables in the security vpc and the spoke vpcs. However, these will not work for the distributed_ingress VPC because the original template created the necessary routes to make this a "working" vpc. The autoscale template is not able to "modify" the existing routes. Therefore, this workshop will only deploy the gwlb endpoints via the template and we will manually modify the route tables in a later task.
+
 
   ![](image-t3-8.png)
 
@@ -114,15 +131,9 @@ weight: 1
 ![](image-t3-5a.png)
 
 * When the command completes, verify "Apply Complete" and valid output statements.
-  * Make note of the Web Url (red arrow) for each instance and for the NLB that load balances between the Availability Zones.
-  * Make note of the ssh command (yellow arrow) you should use to ssh into the linux instances.
-  * Write down the Public IP address of the linux instance in AZ1. We are going to use that IP for our CNF external syslog server when we deploy Fortigate CNF. 
-  * Bring up a local browser and try to access the Web Url. It will fail because these Web Servers are vulnerable and the security group only allows ssh (tcp port 22). We will fix this in the next task.
-  * Copy the "Outputs" section to a scratchpad. We will use this info throughout this workshop.
 
 ![](image-t3-5b.png)
 
-![](image-t3-5c.png)
 
 The network diagram for the distributed ingress vpc looks like this:
 
