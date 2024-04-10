@@ -65,8 +65,7 @@ This workshop is pre-configured in the terraform.tfvars to run in the us-west-2 
 * When the command completes, verify "Apply Complete" and valid output statements.
   * Make note of the Web Url (red arrow) for each instance and for the NLB that load balances between the Availability Zones.
   * Make note of the ssh command (yellow arrow) you should use to ssh into the linux instances.
-  * Make note of the spk_vpc section of the output. This will be used as input to the autoscale templates. This defines the vpc id of the distributed workload vpc and the subnet_ids for the gwlb endpoints. 
-  * Write down the Public IP address of the linux instance in AZ1. We are going to use that IP for our CNF external syslog server when we deploy Fortigate CNF. 
+  * Make note of the spk_vpc section of the output. This will be used as input to the autoscale templates. This defines the vpc id of the distributed workload vpc and the subnet_ids for the gwlb endpoints.
   * Bring up a local browser and try to access the Web Url. It will fail because these Web Servers are vulnerable and the security group only allows ssh (tcp port 22). We will fix this in the next task.
   * Copy the "Outputs" section to a scratchpad. We will use this info throughout this workshop.
 
