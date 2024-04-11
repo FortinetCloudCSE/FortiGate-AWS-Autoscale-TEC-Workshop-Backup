@@ -30,10 +30,6 @@ This TEC Recipe is intended to help accomplish the following:
   * Interact with FortiGate GUI and CLI, to build security policy sets, and deploy them
   * Test traffic flows in an example environment and use FortiGate deployed as an autoscale group to control 
     traffic flows
-  * Configure FortiManager to manage a Fortigate Autoscale Group
-  * Configure FortiAnalyzer to collect and analyze logs from FortiGate Autoscale Group
-  * Learn how to use FortiGate Autoscale to protect AWS workloads in common architecture patterns
-  * Configure SDN Connectors to integrate FortiGate with VPC Tagged objects and dynamic policy creation
   * Deploy a FortiGate Autoscale Group into an existing customer environment. This is different from deploying a FortiGate Autoscale Group in a demo environment, as it requires the use of existing AWS resources and VPCs. This would be a common use case for a customer who wants to protect their existing AWS workloads with FortiGate Autoscale Group.
 
 
@@ -48,10 +44,6 @@ At the end of this TEC Recipe, you will complete the following objectives:
   * Create a policy set and apply it to a FortiGate Autoscale Group *(10 minutes)*
   * Test traffic flows (distributed in + egress) *(20 minutes)*
   * Destroy the resources for the distributed egress architecture *(10 minutes)*
-  * Deploy a FortiGate Autoscale Group to control a centralized egress architecture *(20 minutes)*
-  * Create a policy set and apply it to a FortiGate Autoscale Group *(10 minutes)*
-  * Test traffic flows (centralized egress + east-west inspection) *(20 minutes)*
-  * Destroy the resources for the centralized egress architecture *(10 minutes)*
   * Deploy a FortiGate Autoscale Group into an existing customer environment *(20 minutes)*
 
 
@@ -65,7 +57,7 @@ These are the AWS and Fortinet components that will be used during this workshop
   * AWS SDN (AWS intrinsic router and route tables in a VPC)
   * AWS Gateway Load Balancer (GWLB)
   * AWS Transit Gateway (TGW)
-  * AWS EC2 Instances (Amazon Linux OS)
+  * AWS EC2 Instances (Ubuntu Linux OS)
 
 ## AWS Reference Architecture Diagram
 

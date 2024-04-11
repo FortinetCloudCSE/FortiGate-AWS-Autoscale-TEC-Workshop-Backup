@@ -94,7 +94,7 @@ weight: 1
   
   ![](image-t3-6.png)
 
-* Fill in the on_demand (PayGo) section with values for the highlighted variables:
+* Fill in the on_demand (on_demand) section with values for the highlighted variables:
   * template_name = anything
   * fgt_version = desired fortios version
   * license_type = leave as on-demand
@@ -104,19 +104,22 @@ weight: 1
   * asg_min_size = minimum number of instances in the autoscale group
   * asg_desired_capacity = desired for paygo is meaningless. The on-demand will only scale as a result of an autoscale event. 
   * leave the rest of the variables as is
-  
-* The scale policies control the scaling of the autoscale groups. The scale policies are based on the average CPU utilization of the autoscale group. The scale policies are set to scale out when the average CPU utilization is greater than 80% and scale in when the average CPU utilization is less than 20%. The scale policies are set to scale out and in by 1 instance. This workshop will leave the scaling policies as is.
-
 
   ![](image-t3-7.png)
+
+* The scale policies control the scaling of the autoscale groups. The scale policies are based on the average CPU utilization of the autoscale group. The scale policies are set to scale out when the average CPU utilization is greater than 80% and scale in when the average CPU utilization is less than 30%. The scale policies are set to scale out and in by 1 instance. This workshop will leave the scaling policies as is.
+
+  ![](image-t3-7a.png)
 
 * Set enable_cross_zone_load_balancing to true. This will allow the Gateway Load Balancer to distribute traffic across all instances in all availability zones.
 * Copy the spk_vpc section from your scratchpad and paste it into the tfvars file.
 * Set general_tags to anything you like. Each resource created by the template will have these tags.
 * As you can see in the example tfvars file, there are many options (commented out) for configuring the route tables in the security vpc and the spoke vpcs. However, these will not work for the distributed_ingress VPC because the original template created the necessary routes to make this a "working" vpc. The autoscale template is not able to "modify" the existing routes. Therefore, this workshop will only deploy the gwlb endpoints via the template and we will manually modify the route tables in a later task.
-
+* Paste the spk_vpc definition from the output of the previous template (output in scratchpad). This was added to the distributed template to make sure the proper format is used. This spk_vpc definition will deploy the gwlb endpoints into the specified vpc_id and place the gwlbe's into the specified subnets. These are the subnets labeled gwlbe-az1 and gwlbe-az2. 
 
   ![](image-t3-8.png)
+
+  ![](image-t3-9.png)
 
 * Use the "terraform init" command to initialize the template and download the providers
 
@@ -124,7 +127,7 @@ weight: 1
 
 ![](image-t3-10.png)
 
-* Use "terraform apply --auto-approve" command to build the vpc. This command takes about 5 minutes to complete.
+* Use "terraform apply --auto-approve" command to build the vpc. This command takes about 10-12 minutes to complete.
 
 ``` terraform apply --auto-approve ```
 

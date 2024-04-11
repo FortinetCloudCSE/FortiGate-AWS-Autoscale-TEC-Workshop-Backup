@@ -15,8 +15,5 @@ This workshop is intended to help accomplish the following:
   * Use AWS Cloudshell and Terraform to deploy a Fortigate autoscale group in a usable demo environment
   * Interact with a FortiGate autoscale group build security policy sets, and deploy them
   * Test traffic flows in an example environment and use a FortiGate autoscale group to control traffic flows
-  * Configure FortiManager to manage FortiGate Autoscale Groups
-  * Configure FortiAnalyzer to collect and analyze logs from a FortiGate autoscale group
-  * Learn how to use a FortiGate autoscale group to protect AWS workloads in common architecture patterns
-  * Deploy a FortiGate autoscale group into an existing customer environment. This is different from deploying a FortiGate autoscale group in a demo environment, as it requires the use of existing AWS resources and VPCs. This would be a common use case for a customer who wants to protect their existing AWS workloads with FortiGate autoscale group.
+  * Deploy a FortiGate autoscale group into an existing customer environment. 
 
