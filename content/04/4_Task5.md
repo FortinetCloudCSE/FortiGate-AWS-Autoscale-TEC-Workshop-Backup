@@ -22,51 +22,51 @@ weight: 1
 
 ![](image-mdw-cap-modified.png)
 
-* The tricky part here is to make sure you point the routes at the correct CNF Endpoint, i.e. the endpoint in the same AZ as the route table that you are modifying. If you don't do this correctly, you will create routes that push the traffic across AZ's and add cost to the deployment. Watch for the **hints** below to assist with this.
+* The tricky part here is to make sure you point the routes at the correct GWLB Endpoint, i.e. the endpoint in the same AZ as the route table that you are modifying. If you don't do this correctly, you will create routes that push the traffic across AZ's and add cost to the deployment. Watch for the **hints** below to assist with this.
 
 * Log into your AWS account and navigate to the [**Console Home**](https://us-west-2.console.aws.amazon.com/console/home?region=us-west-2#).
 * Click on the VPC icon
 
-![](image-t7-1.png)
+![](image-t5-1.png)
 
-* First, we need to understand which CNF Endpoint is deployed in each AZ. To do this, click on "Endpoints" in the left pane.
+* First, we need to understand which GWLB Endpoint is deployed in each AZ. To do this, click on "Endpoints" in the left pane.
 
-![](image-t7-1a.png)
+![](image-t5-1a.png)
 
-* Then choose one of the CNF Endpoints and click subnets in the lower window.
+* Then choose one of the Endpoints and click subnets in the lower window.
 
-![](image-t7-1b.png)
+![](image-t5-1b.png)
 
 * From this screen, you can see the subnet id where the Endpoint is deployed. You have a few options here. 
   * You could navigate to the subnet tab on the left navigation pane and check which AZ that subnet is in using the subnet id. 
-  * You might notice that the IP address is 10.0.4.75. If you check the network diagram above, you can see that the 10.0.4.0/24 CIDR is in AZ2. 
-  * In this case, I included the AZ in the name of the name of the subnet "cnf-dist0-prod-app-az2" in the terraform that deployed the workshop VPC. It's a useful hint in this case, but that may not be true in other VPC environments. 
-  * Nevertheless, this endpoint (vpce-xxxxc79b) is deployed in AZ2 and (vpce-xxxxc150) is deployed in AZ1. 
+  * You might notice that the IP address is 10.0.1.187. If you check the network diagram above, you can see that the 10.0.1.0/24 CIDR is in AZ1. 
+  * In this case, I included the AZ in the name of the name of the subnet "asg-dist-lab-workload-az1" in the terraform that deployed the workshop VPC. It's a useful hint in this case, but that may not be true in other VPC environments. 
+  * Nevertheless, this endpoint (vpce-xxxxcee0) is deployed in AZ1 and (vpce-xxxxd9f3) is deployed in AZ2. 
   * You might want to add this info to your scratchpad.
 
 * Now let's modify the route tables. Click on "Route tables" in the left pane
 
-![](image-t7-2.png)
+![](image-t5-2.png)
 
-* Highlight the IGW Ingress Route table named "cnf-dist-rec-igw-rt". 
+* Highlight the IGW Ingress Route table named "asg-dist-lab-igw-rt". 
 * Click on the "Routes" tab at the bottom. 
 * Click on "Edit routes".
 
-![](image-t7-3.png)
+![](image-t5-3.png)
 
 * We could just change the full VPC CIDR Route and send the traffic to one of the GWLB Endpoints we created earlier. That would redirect all ingress traffic to one AZ or the other. But that would create cross AZ traffic and that would drive up the cost of the deployment. Don't do this!
 
-![](image-t7-4.png)
+![](image-t5-4.png)
 
 * Instead, let's create an entry for each VPC subnet that we want to redirect and send it to the GWLBe in the same AZ. In this example, we have an NLB with a subnet mapping in the Public Subnet in each AZ. We can see this by looking at the Network Mapping associated with the NLB. 
 
-![](image-t7-5.png)
+![](image-t5-5.png)
 
 * So lets add an IGW Ingress Route Table entry for each Public Subnet CIDR and send that traffic to the GWLBe in the same AZ. 
-  * Remember, 10.0.0.0/24 is in AZ1 and the VPC Endpoint for AZ1 is vpce-xxxxc79b
-  * 10.0.3.0/24 is in AZ2 and the VPC Endpoint for AZ2 is vpce-xxxxc150
+  * Remember, 10.0.0.0/24 is in AZ1 and the VPC Endpoint for AZ1 is vpce-xxxxcee0
+  * 10.0.3.0/24 is in AZ2 and the VPC Endpoint for AZ2 is vpce-xxxxd9f3
 
-![](image-t7-6.png)
+![](image-t5-6.png)
 
 * If we want the firewall to inspect traffic going to the EIP associated with the Linux instances, we need to add a similar route entry. The Linux instances are in the private subnet. Those CIDR's are 10.0.2.0/24 and 10.0.5.0/24. So add route table entries for those CIDR's.
 * Click "Save changes"
@@ -76,42 +76,42 @@ weight: 1
 **Note:** Disregard the actual VPC Endpoint ID's used in the images. The workshop images were collected over multiple deployments and the VPCE ID's may have changed. We just want to make sure AZ Affinity is preserved when adding the routes.
 {{% /notice %}}
 
-![](image-t7-7.png)
+![](image-t5-7.png)
 
 * In this example, all the traffic goes to the linux instances and those instances are in the private subnets. The ingress traffic can be directed at the NLB subnet mappings or directly to the EIPs on the Linux instances. To have the egress traffic inspected, we need to redirect the traffic leaving the private subnet into the GWLBe. 
 * Navigate back to the "Route tables" screen.
 
-![](image-t7-8.png)
+![](image-t5-8.png)
 
 * Currently, the private route tables are sending all traffic to the IGW. This will not allow Fortigate CNF to inspect egress traffic. In the private subnet table, add a default route to send all traffic leaving the private subnet to the GWLBe in the same AZ. 
 * Highlight the private route table for AZ1.
 * Click the "Routes" tab at the bottom
 * Click "Edit routes"
 
-![](image-t7-9.png)
+![](image-t5-9.png)
 
 * Change the default route target to the GWLBe in AZ1.
 * Click "Save changes"
 
-![](image-t7-10.png)
+![](image-t5-10.png)
 
 * Navigate back to the "Route tables" screen and change the default route for the private subnet in AZ2. 
 
-![](image-t7-11.png)
+![](image-t5-11.png)
 
 * Highlight the route table for the private subnet in AZ2.
 * Click "Routes" tab at the bottom
 * Click "Edit routes"
 
-![](image-t7-12.png)
+![](image-t5-12.png)
 
 * Change the default route target to the GWLBe in AZ2.
 * Click "Save changes"
 
-![](image-t7-13.png)
+![](image-t5-13.png)
 
-* Ingress and Egress traffic is now being sent to Fortigate CNF for inspection.
+* Ingress and Egress traffic is now being sent to Fortigate ASG for inspection.
 
-* The next task will create a "Policy Set" for Fortigate CNF and this will allow us to create a security policy and log the traffic.
+* The next task will create a "Policy Set" for Fortigate ASG and this will allow us to create a security policy and log the traffic.
 
 * This concludes this section.
