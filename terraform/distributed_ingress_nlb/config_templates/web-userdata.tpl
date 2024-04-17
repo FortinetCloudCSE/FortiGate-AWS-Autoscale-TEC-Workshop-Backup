@@ -28,7 +28,107 @@ runuser -l ubuntu -c 'echo "export PATH=$PATH:~/bin" >> ~/.bashrc'
 runuser -l ubuntu -c 'echo "export PATH=$PATH:~/bin" >> ~/.bashrc'
 runuser -l ubuntu -c 'echo "export AWS_ACCESS_KEY_ID=\`aws --profile default configure get aws_access_key_id\`" >> ~/.bashrc'
 runuser -l ubuntu -c 'echo "export AWS_SECRET_ACCESS_KEY=\`aws --profile default configure get aws_secret_access_key\`" >> ~/.bashrc'
+cat >> /home/ubuntu/fgt_policy.txt <<EOF
+config firewall policy
+    edit 0
+        set name "ingress"
+        set srcintf "geneve-tunnels"
+        set dstintf "geneve-tunnels"
+        set action accept
+        set srcaddr "NorthAmerica"
+        set dstaddr "rfc-1918-subnets"
+        set srcaddr "all"
+        set dstaddr "all"
+        set schedule "always"
+        set service "ALL"
+    next
+       edit 0
+        set name "egress-hairpin"
+        set srcintf "geneve-tunnels"
+        set dstintf "geneve-tunnels"
+        set action accept
+        set srcaddr "rfc-1918-subnets"
+        set dstaddr "NorthAmerica"
+        set schedule "always"
+        set service "ALL"
+    next
+end
+EOF
 
+cat >> /home/ubuntu/fgt_config.conf <<EOF
+# This is an FortiGate configuration example with two Geneve tunnel: geneve-az1, geneve-az2. Please add or remove based on your own value.
+# Geneve tunnel name will be with format 'geneve-az<NUMBER>'. Check 'az_name_map' of the output of template, which is map of Geneve tunnel name to the AZ name that supported in Security VPC.
+#
+# This is an FortiGate configuration example with two Geneve tunnel: geneve-az1, geneve-az2. Please add or remove based on your own value.
+# Geneve tunnel name will be with format 'geneve-az<NUMBER>'. Check 'az_name_map' of the output of template, which is map of Geneve tunnel name to the AZ name that supported in Security VPC.
+# Change port2 to port1 if fgt_intf_mode set to 1-arm.
+
+config system zone
+    edit "geneve-tunnels"
+        set interface "geneve-az1" "geneve-az2"
+    next
+end
+
+config router static
+    edit 0
+        set distance 5
+        set priority 100
+        set device "geneve-az1"
+    next
+    edit 0
+        set distance 5
+        set priority 100
+        set device "geneve-az2"
+    next
+end
+
+config router policy
+    edit 1
+        set input-device "geneve-az1"
+        set dst "10.0.0.0/255.0.0.0" "172.16.0.0/255.240.0.0" "192.168.0.0/255.255.0.0"
+        set output-device "geneve-az1"
+    next
+    edit 2
+        set input-device "geneve-az2"
+        set dst "10.0.0.0/255.0.0.0" "172.16.0.0/255.240.0.0" "192.168.0.0/255.255.0.0"
+        set output-device "geneve-az2"
+    next
+end
+
+config firewall address
+    edit "10.0.0.0/8"
+        set subnet 10.0.0.0 255.0.0.0
+    next
+    edit "172.16.0.0/20"
+        set subnet 172.16.0.0 255.255.240.0
+    next
+    edit "192.168.0.0/16"
+        set subnet 192.168.0.0 255.255.0.0
+    next
+    edit "UnitedStates"
+        set type geography
+        set country "US"
+    next
+    edit "UnitedStatesIslands"
+        set type geography
+        set country "UM"
+    next
+    edit "Canada"
+        set type geography
+        set country "CA"
+    next
+end
+
+config firewall addrgrp
+    edit "rfc-1918-subnets"
+        set member "10.0.0.0/8" "172.16.0.0/20" "192.168.0.0/16"
+    next
+    edit "NorthAmerica"
+        set member "Canada" "UnitedStates" "UnitedStatesIslands"
+    next
+end
+
+EOF
 
 
 

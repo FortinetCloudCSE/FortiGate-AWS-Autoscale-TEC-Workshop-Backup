@@ -10,6 +10,7 @@ weight: 1
 * ssh into the Linux instance in AZ1 using the command in your scratchpad.
 
   ``` ssh -i <keypair> ubuntu@<public-ip> ```
+
 ![](image-t3-1.png)
 
 * First task is to provide the ec2 instance with your AWS account credentials. This will provide the necessary permissions to run the autoscale terraform templates. 
