@@ -71,11 +71,13 @@ end
 
 config router static
     edit 0
+        set dst 10.0.0.0/16
         set distance 5
         set priority 100
         set device "geneve-az1"
     next
     edit 0
+        set dst 10.0.0.0/16
         set distance 5
         set priority 100
         set device "geneve-az2"

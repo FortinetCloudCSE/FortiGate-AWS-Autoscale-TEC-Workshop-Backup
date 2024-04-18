@@ -3,7 +3,7 @@ title: "Managing Security with AWS Security Groups - Discussion Points"
 weight: 2
 ---
 
-## ***Discussion Points During a Demo - Chapter 4***
+## ***Discussion Points During a Demo - Chapter 3***
 
 Key reasons for using a Next Generation Firewall in the cloud:
 
