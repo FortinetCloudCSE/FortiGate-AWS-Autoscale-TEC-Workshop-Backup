@@ -7,7 +7,7 @@ weight: 1
 
 ![](image-mdw-cap-modified.png)
 
-* Let's create a couple of policies that allow ingress and egress traffic to pass through the firewall. I have included the CLI for convenience. You can past this into the CLI from the console.
+* Let's create a couple of policies that allow ingress and egress traffic to pass through the firewall. I have included the CLI for convenience. You can paste this into the CLI from the console.
 
   * Copy the following text from the workshop into your copy&paste buffer
   * Click on the CLI icon. 
