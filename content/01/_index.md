@@ -66,7 +66,7 @@ These are the AWS and Fortinet components that will be used during this workshop
   * AWS SDN (AWS intrinsic router and route tables in a VPC)
   * AWS Gateway Load Balancer (GWLB)
   * AWS Transit Gateway (TGW)
-  * AWS EC2 Instances (Ubuntu Linux OS)
+  * AWS EC2 gitInstances (Ubuntu Linux OS)
 
 ## AWS Reference Architecture Diagram
 
