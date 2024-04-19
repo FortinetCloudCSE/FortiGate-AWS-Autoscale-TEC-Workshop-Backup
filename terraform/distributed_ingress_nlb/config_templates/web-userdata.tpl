@@ -28,32 +28,6 @@ runuser -l ubuntu -c 'echo "export PATH=$PATH:~/bin" >> ~/.bashrc'
 runuser -l ubuntu -c 'echo "export PATH=$PATH:~/bin" >> ~/.bashrc'
 runuser -l ubuntu -c 'echo "export AWS_ACCESS_KEY_ID=\`aws --profile default configure get aws_access_key_id\`" >> ~/.bashrc'
 runuser -l ubuntu -c 'echo "export AWS_SECRET_ACCESS_KEY=\`aws --profile default configure get aws_secret_access_key\`" >> ~/.bashrc'
-cat >> /home/ubuntu/fgt_policy.txt <<EOF
-config firewall policy
-    edit 0
-        set name "ingress"
-        set srcintf "geneve-tunnels"
-        set dstintf "geneve-tunnels"
-        set action accept
-        set srcaddr "NorthAmerica"
-        set dstaddr "rfc-1918-subnets"
-        set srcaddr "all"
-        set dstaddr "all"
-        set schedule "always"
-        set service "ALL"
-    next
-       edit 0
-        set name "egress-hairpin"
-        set srcintf "geneve-tunnels"
-        set dstintf "geneve-tunnels"
-        set action accept
-        set srcaddr "rfc-1918-subnets"
-        set dstaddr "NorthAmerica"
-        set schedule "always"
-        set service "ALL"
-    next
-end
-EOF
 
 cat >> /home/ubuntu/fgt_config.conf <<EOF
 # This is an FortiGate configuration example with two Geneve tunnel: geneve-az1, geneve-az2. Please add or remove based on your own value.
@@ -71,13 +45,11 @@ end
 
 config router static
     edit 0
-        set dst 10.0.0.0/16
         set distance 5
         set priority 100
         set device "geneve-az1"
     next
     edit 0
-        set dst 10.0.0.0/16
         set distance 5
         set priority 100
         set device "geneve-az2"
