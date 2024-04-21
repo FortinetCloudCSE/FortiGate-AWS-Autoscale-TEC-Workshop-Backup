@@ -88,8 +88,10 @@ weight: 1
 
 * Fill in the cidr_block you want to use for the inspection VPC. 
 * Fill in the cidr_block you want to use for each spoke_vpc. Create  the spoke_cidr_list as a terraform list. 
-* Create a terraform list for the set of availability_zones you want to use.
-
+* Create a terraform list for the set of availability_zones you want to use. 
+{{% notice info %}}
+**Note:** us-west-2b does not support the service endpoint used by these templates. Use us-west-2c instead
+{{% /notice %}}
 ![](image-t4-3.png)
 
 * Fill in the desired fgt_intf_mode. 1-arm mode uses a single Fortigate ENI and hairpins the traffic in and out of the same ENI. 2-arm mode uses two Fortigate ENIs and allows for a more traditional routing configuration via a public and private interface. 
@@ -107,7 +109,7 @@ weight: 1
   * lic_folder_path = path to Fortigate byol licenses
   * asg_max_size = maximum number of instances in the autoscale group
   * asg_min_size = minimum number of instances in the autoscale group
-  * asg_desired_capacity = desired number of instances in the autoscale group
+  * asg_desired_capacity = desired number of instances in the autoscale group **(we will leave desired at one until we get everything configured)**
   * user_conf_file_path provides configuration cli to preconfigure the fortigates. Leave this variable as-is. The workshop included a pre-confiured fgt_conf.conf file in the home directory. We will copy the pre-made fgt_config.conf file into place in a few steps
   * leave the rest of the variables as-is
   
@@ -120,8 +122,8 @@ weight: 1
   * fgt_password = desired fortigate password when logging into the fortigate
   * keypair_name = keypair used for passwordless login
   * asg_max_size = maximum number of on-demand instances in the autoscale group
-  * asg_min_size = minimum number of instances in the autoscale group
-  * asg_desired_capacity = desired for paygo is meaningless. The on-demand will only scale as a result of an autoscale event. 
+  * asg_min_size = Leave minimum set to 0. We want paygo autoscale to scale-in back to 0 if the instances are not needed.
+  * asg_desired_capacity = Leave desired set to 0. We want on-demand to only scale as a result of an autoscale event. 
   * user_conf_file_path provides configuration cli to preconfigure the fortigates. Leave this variable as-is. The workshop included a pre-confiured fgt_conf.conf file in the home directory. We will copy the pre-made fgt_config.conf file into place in a few steps
   * leave the rest of the variables as-is
 
