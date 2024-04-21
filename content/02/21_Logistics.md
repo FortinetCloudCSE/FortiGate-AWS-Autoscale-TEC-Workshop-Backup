@@ -10,6 +10,8 @@ For the FortiGate Autoscale Tec Recipe, you will need the following:
   * **AWS sign in link**
   * **IAM User w/ console access**
   * **Password for the IAM User**
+  * **Two properly sized ITF'd BYOL licenses for Fortigate VM (recommend unlimited CPUs to avoid sizing confusion)**
+
 
 ## Navigating the AWS Console
 

@@ -5,6 +5,10 @@ weight: 1
 
 * The initial autoscale group is now deployed and supplied with a configuration that provides all the connectivity and routes needed to inspect traffic. The current policy set is a "DENY ALL" policy and the workload vpc route tables are redirecting ingress and egress traffic to the firewalls for inspection. This traffic should be sent to the firewalls on the geneve tunnels and security will be applied there. Let's do quick verification of the configuration and make sure everything looks correct. The initial deployment looks like the network diagram below: 
 
+{{% notice info %}}
+**Note:** You may notice that you have lost connectivity to your ec2 instance in AZ1. This is because the modified route tables are sending traffic to the GWLBe's and the Fortigate has a default "DENY ALL" policy. We will fix this in the next task.
+{{% /notice %}}
+
 ![](image-mdw-cap-modified.png)
 
 * First, let's find the public IP of the primary instance of the FortiGate Autoscale Group. 

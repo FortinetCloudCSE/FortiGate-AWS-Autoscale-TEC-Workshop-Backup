@@ -39,7 +39,7 @@ weight: 1
 
 * From this screen, you can see the subnet id where the Endpoint is deployed. You have a few options here. 
   * You could navigate to the subnet tab on the left navigation pane and check which AZ that subnet is in using the subnet id. 
-  * You might notice that the IP address is 10.0.1.187. If you check the network diagram above, you can see that the 10.0.1.0/24 CIDR is in AZ1. 
+  * You might notice that the IP address is 10.0.0.180. This IP address may change on different deployments, but the subnet should stay the same. If you check the network diagram above, you can see that the 10.0.0.0/24 CIDR is in AZ1. 
   * In this case, I included the AZ in the name of the name of the subnet "asg-dist-lab-workload-az1" in the terraform that deployed the workshop VPC. It's a useful hint in this case, but that may not be true in other VPC environments. 
   * Nevertheless, this endpoint (vpce-xxxxcee0) is deployed in AZ1 and (vpce-xxxxd9f3) is deployed in AZ2. 
   * You might want to add this info to your scratchpad.
@@ -83,7 +83,7 @@ weight: 1
 
 ![](image-t5-8.png)
 
-* Currently, the private route tables are sending all traffic to the IGW. This will not allow Fortigate CNF to inspect egress traffic. In the private subnet table, add a default route to send all traffic leaving the private subnet to the GWLBe in the same AZ. 
+* Currently, the private route tables are sending all traffic to the IGW. This will not allow the Fortigate Autoscale Group to inspect egress traffic. In the private subnet table, add a default route to send all traffic leaving the private subnet to the GWLBe in the same AZ. 
 * Highlight the private route table for AZ1.
 * Click the "Routes" tab at the bottom
 * Click "Edit routes"

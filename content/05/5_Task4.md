@@ -73,11 +73,11 @@ weight: 1
 {{% /notice %}}
 
 {{% notice info %}}
-**Note:** This task will create a Fortigate Autoscale deployment suitable for a customer demo environment. This environment is complete with a Transit Gateway (TGW) and complete spoke VPC's.
+**Note:** This task will create a Fortigate Autoscale deployment suitable for a customer demo environment. 
 {{% /notice %}}
 
 {{% notice info %}}
-**Note:** Documentation for the template variables can be found here: https://github.com/fortinetdev/terraform-aws-cloud-modules/tree/main/examples/spk_tgw_gwlb_asg_fgt_igw
+**Note:** Documentation for the template variables can be found here: https://github.com/fortinetdev/terraform-aws-cloud-modules/tree/main/examples/spk_gwlb_asg_fgt_gwlb_igw
 {{% /notice %}}
 
 * This workshop will assume your access_key and secret_key are already exported into your environment. Remove the "access_key" and "secret_key" lines and fill in the "region" you intend to use for your deployment.
@@ -108,8 +108,8 @@ weight: 1
   * asg_max_size = maximum number of instances in the autoscale group
   * asg_min_size = minimum number of instances in the autoscale group
   * asg_desired_capacity = desired number of instances in the autoscale group
-  * user_conf_file_path provides configuration cli to preconfigure the fortigates. Leave this variable as-is. The workshop included a pre-confiured fgt_conf.conf file in the home directory. We will copy the pre-made fgt_config.conf file into place is a few steps
-  * leave the rest of the variables as is
+  * user_conf_file_path provides configuration cli to preconfigure the fortigates. Leave this variable as-is. The workshop included a pre-confiured fgt_conf.conf file in the home directory. We will copy the pre-made fgt_config.conf file into place in a few steps
+  * leave the rest of the variables as-is
   
   ![](image-t4-6.png)
 
@@ -122,8 +122,8 @@ weight: 1
   * asg_max_size = maximum number of on-demand instances in the autoscale group
   * asg_min_size = minimum number of instances in the autoscale group
   * asg_desired_capacity = desired for paygo is meaningless. The on-demand will only scale as a result of an autoscale event. 
-  * user_conf_file_path provides configuration cli to preconfigure the fortigates. Leave this variable as-is. The workshop included a pre-confiured fgt_conf.conf file in the home directory. We will copy the pre-made fgt_config.conf file into place is a few steps
-  * leave the rest of the variables as is
+  * user_conf_file_path provides configuration cli to preconfigure the fortigates. Leave this variable as-is. The workshop included a pre-confiured fgt_conf.conf file in the home directory. We will copy the pre-made fgt_config.conf file into place in a few steps
+  * leave the rest of the variables as-is
 
     ![](image-t4-7.png)
 
@@ -136,6 +136,11 @@ weight: 1
 * Set general_tags to anything you like. Each resource created by the template will have these tags.
 * As you can see in the example tfvars file, there are many options (commented out) for configuring the route tables in the security vpc and the spoke vpcs. However, these will not work for the distributed_ingress VPC because the original template created the necessary routes to make this a "working" vpc. The autoscale template is not able to "modify" the existing routes. Therefore, this workshop will only deploy the gwlb endpoints via the template and we will manually modify the route tables in a later task.
 * Paste the spk_vpc definition from the output of the previous template (output in scratchpad). This was added to the distributed template to make sure the proper format is used. This spk_vpc definition will deploy the gwlb endpoints into the specified vpc_id and place the gwlbe's into the specified subnets. These are the subnets labeled gwlbe-az1 and gwlbe-az2. 
+
+
+{{% notice info %}}
+**Note:** Monitor this mantis for updates on the ability to automatically modify the necessary routes into the workload vpc: https://mantis.fortinet.com/bug_view_page.php?bug_id=1021311
+{{% /notice %}}
 
   ![](image-t4-8.png)
 
@@ -166,10 +171,6 @@ weight: 1
 * When the command completes, verify "Apply Complete" and valid output statements.
 
 ![](image-t4-5a.png)
-
-The network diagram for the FortiGate Autoscale Security VPC with the distributed ingress vpc with GWLB endpoints deployed looks like this:
-
-![](image-distriuted-ingress-with-nlb.png)
 
 * This concludes this section.
 

@@ -62,6 +62,6 @@ weight: 1
 
 ![](image-t7-6.png)
 
-* The next task will teardown and destroy the workshop infrastructure
+* The next task will will manipulate the autoscale group.
 
 * This concludes this section.

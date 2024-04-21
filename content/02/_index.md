@@ -18,12 +18,11 @@ To complete the workshop, you will need an understanding of the following concep
     * NAT Gateways (NATGW)
     * Elastic IP Addresses (EIP)
     * Security Groups (SG)
-    * AWS Transit Gateway (TGW)
     * AWS Gateway Load Balancer (GWLB)
     * AWS Lambda
     * AWS Autoscale
     * AWS Cloudwatch
 * AWS Common Architecture Patterns
     * Distributed Ingress + Egress
-    * Centralized Egress + East-West
+    * Centralized Egress + East-West (not used in this exercise)
 

@@ -17,7 +17,7 @@ For more information, review the following:
 
 ### Advantages of Using AWS CloudShell for Deployment
 
-AWS CloudShell is a browser-based shell that makes it easy to securely manage, explore, and interact with your AWS resources. CloudShell is pre-authenticated with your console credentials and common development and operations tools are pre-installed. CloudShell is available in all commercial AWS regions at no additional cost and provides an environment with preconfigured CLI tools and access to AWS services.  CloudShell provides a temporary 1 GB storage volume that is deleted after 120 minutes of inactivity.  CloudShell is a convenient method to deploy IaC templates for demonstrations and quick deployments.
+AWS CloudShell is a browser-based shell that makes it easy to securely manage, explore, and interact with your AWS resources. CloudShell is pre-authenticated with your console credentials and common development and operations tools are pre-installed. CloudShell is available in all commercial AWS regions at no additional cost and provides an environment with preconfigured CLI tools and access to AWS services. CloudShell is a convenient method to deploy IaC templates for demonstrations and quick deployments.
 
 ### Alternative Methods of using Terraform in Production Environments
 
