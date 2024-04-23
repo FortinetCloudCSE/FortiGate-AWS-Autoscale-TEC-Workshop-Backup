@@ -33,7 +33,11 @@ weight: 1
 * To make this version the default version, use the following commmand
   
   ``` tfenv use 1.5.3 ```
-  
+
+ {{% notice info %}}
+**Note:** The current version of terraform changes as newer patches are released. Just use the latest version of terraform for this workshop.
+{{% /notice %}}
+
 * Verify you are using the proper version of terraform 
 
   ``` terraform -v ```

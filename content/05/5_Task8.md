@@ -22,4 +22,8 @@ weight: 1
 
 * Feel free to start passing some traffic flows through the autoscale group.
 
+{{% notice info %}}
+**Note:** Now that you have scaled-out to multiple instances, in multiple availability zones, you may find it difficult to anticipate which Fortigate will inspect and log the traffic. This illustrates why it very helpful to use FortiAnalzyer as a log collector when using an autoscale group.
+{{% /notice %}}
+
 * This concludes this section

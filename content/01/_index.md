@@ -63,3 +63,5 @@ This is the architecture and environment that will be used in the workshop.
 
 ![](image-overview3.png)
 ![](image-overview3a.png)
+
+* This diagram is showing TGW subnets in the security VPC. These subnets are not used in this workshop, but TGW subnets are used in a centralized egress architecture. The TGW subnnets are where the TGW Attachments are associated in this architecture. Since the same Fortigate Autoscale Group can be used to inspect traffic from both architectures simultaneously, these subnets are still included in the diagram. 
