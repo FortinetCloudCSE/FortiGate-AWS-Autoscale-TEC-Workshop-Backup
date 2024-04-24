@@ -50,6 +50,10 @@ This workshop is pre-configured in the terraform.tfvars to run in the us-west-2 
 
 ![](image-t2-3.png)
 
+* The NLB is disabled by default in this workshop. We are not using the NLB and it requires two additional Elastic IPs. If you would like to enable the nlb and test traffic flows through the NLB, enable it here.
+
+![](image-t2-3a.png)
+
 * Use the "terraform init" command to initialize the template and download the providers
 
   ``` terraform init ```
