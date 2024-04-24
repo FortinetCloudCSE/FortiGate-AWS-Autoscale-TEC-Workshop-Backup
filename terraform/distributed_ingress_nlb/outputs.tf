@@ -31,15 +31,15 @@ output "private_subnet_id_az2" {
   description = "The Private Subnet ID for app vpc"
 }
 output "public_nlb_id" {
-  value       = aws_lb.public_nlb_az1.id
+  value       = aws_lb.public_nlb_az1[0].id
   description = "The NLB id"
 }
 output "public_nlb_dns_name" {
-  value       = aws_lb.public_nlb_az1.dns_name
+  value       = aws_lb.public_nlb_az1[0].dns_name
   description = "The DNS Name of the public NLB"
 }
 output "nlb_web_url" {
-  value = "nlb web url: http://${aws_lb.public_nlb_az1.dns_name}"
+  value = "nlb web url: http://${aws_lb.public_nlb_az1[0].dns_name}"
 }
 output "az1_web_url" {
   value = "linux az1 web url: http://${element(module.linux-instance-az1.public_eip, 0)}"
