@@ -34,6 +34,7 @@ vpc_cidr                    = "10.0.0.0/16"
 #
 # Endpoints Variables
 #
+enable_nlb                  = false
 use_preallocated_elastic_ip = false
 enable_public_ips           = true
 ec2_sg_name                 = "ec2"

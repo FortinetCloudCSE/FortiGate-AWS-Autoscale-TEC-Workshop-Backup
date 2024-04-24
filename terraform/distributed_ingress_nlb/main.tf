@@ -291,22 +291,23 @@ resource "aws_route" "gwlbe-az2-default-route" {
 # Target group is the Linux instances above.
 #
 resource "aws_eip" "nlb_eip" {
-  count                 = 2
+  count                 = var.enable_nlb ? 2 : 0
   domain                = "vpc"
 }
 
 resource "aws_lb" "public_nlb_az1" {
-  name = "${var.cp}-${var.env}-${var.vpc_name}-gwlbe-az2"
-  internal = false
-  load_balancer_type = "network"
+  count                 = var.enable_nlb ? 1 : 0
+  name                  = "${var.cp}-${var.env}-${var.vpc_name}-gwlbe-az2"
+  internal              = false
+  load_balancer_type    = "network"
   enable_cross_zone_load_balancing = false
   subnet_mapping {
-    subnet_id     = module.subnet-public-az1.id
-    allocation_id = aws_eip.nlb_eip[0].id
+    subnet_id           = module.subnet-public-az1.id
+    allocation_id       = aws_eip.nlb_eip[0].id
   }
   subnet_mapping {
-    subnet_id     = module.subnet-public-az2.id
-    allocation_id = aws_eip.nlb_eip[1].id
+    subnet_id           = module.subnet-public-az2.id
+    allocation_id       = aws_eip.nlb_eip[1].id
   }
   tags = {
     Name = "Workshop NLB"
@@ -314,27 +315,30 @@ resource "aws_lb" "public_nlb_az1" {
 }
 
 resource "aws_lb_listener" "nlb_listener_http" {
-  load_balancer_arn = aws_lb.public_nlb_az1.arn
-  port = "80"
-  protocol = "TCP"
+  count                 = var.enable_nlb ? 1 : 0
+  load_balancer_arn     = aws_lb.public_nlb_az1.arn
+  port                  = "80"
+  protocol              = "TCP"
   default_action {
-    type = "forward"
-    target_group_arn = aws_lb_target_group.private_nlb_target_group_http.arn
+    type                = "forward"
+    target_group_arn    = aws_lb_target_group.private_nlb_target_group_http.arn
   }
 }
 
 resource "aws_lb_listener" "nlb_listener_ssh" {
-  load_balancer_arn = aws_lb.public_nlb_az1.arn
-  port = "22"
-  protocol = "TCP"
+  count                 = var.enable_nlb ? 1 : 0
+  load_balancer_arn     = aws_lb.public_nlb_az1.arn
+  port                  = "22"
+  protocol              = "TCP"
   default_action {
-    type = "forward"
-    target_group_arn = aws_lb_target_group.private_nlb_target_group_ssh.arn
+    type                = "forward"
+    target_group_arn    = aws_lb_target_group.private_nlb_target_group_ssh.arn
   }
 }
 
 
 resource "aws_lb_target_group" "private_nlb_target_group_http" {
+  count     = var.enable_nlb ? 1 : 0
   name      = "internal-http"
   port      = 80
   protocol  = "TCP"
@@ -342,6 +346,7 @@ resource "aws_lb_target_group" "private_nlb_target_group_http" {
 }
 
 resource "aws_lb_target_group" "private_nlb_target_group_ssh" {
+  count     = var.enable_nlb ? 1 : 0
   name      = "internal-ssh"
   port      = 22
   protocol  = "TCP"
@@ -349,22 +354,26 @@ resource "aws_lb_target_group" "private_nlb_target_group_ssh" {
 }
 
 resource "aws_lb_target_group_attachment" "nlb_target_az1_group_att_ssh" {
+  count            = var.enable_nlb ? 1 : 0
   target_group_arn = aws_lb_target_group.private_nlb_target_group_ssh.arn
-  target_id = module.linux-instance-az1.instance_id
+  target_id        = module.linux-instance-az1.instance_id
 }
 
 resource "aws_lb_target_group_attachment" "nlb_target_az1_group_att_http" {
-  target_group_arn = aws_lb_target_group.private_nlb_target_group_http.arn
-  target_id = module.linux-instance-az1.instance_id
+  count                 = var.enable_nlb ? 1 : 0
+  target_group_arn      = aws_lb_target_group.private_nlb_target_group_http.arn
+  target_id             = module.linux-instance-az1.instance_id
 }
 resource "aws_lb_target_group_attachment" "nlb_target_az2_group_att_ssh" {
-  target_group_arn = aws_lb_target_group.private_nlb_target_group_ssh.arn
-  target_id = module.linux-instance-az2.instance_id
+  count                 = var.enable_nlb ? 1 : 0
+  target_group_arn      = aws_lb_target_group.private_nlb_target_group_ssh.arn
+  target_id             = module.linux-instance-az2.instance_id
 }
 
 resource "aws_lb_target_group_attachment" "nlb_target_az2_group_att_http" {
-  target_group_arn = aws_lb_target_group.private_nlb_target_group_http.arn
-  target_id = module.linux-instance-az2.instance_id
+  count                 = var.enable_nlb ? 1 : 0
+  target_group_arn      = aws_lb_target_group.private_nlb_target_group_http.arn
+  target_id             = module.linux-instance-az2.instance_id
 }
 
 #
