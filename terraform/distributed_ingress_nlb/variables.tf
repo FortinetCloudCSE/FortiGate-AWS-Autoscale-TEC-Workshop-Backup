@@ -40,6 +40,10 @@ variable "private_subnet_index" {
   description = "Index of the private subnet"
   default = 2
 }
+variable "enable_nlb" {
+  description = "Boolean to allow creation of nlb and associated resources"
+  type        = bool
+}
 variable "enable_public_ips" {
   description = "Boolean to Enable an Elastic IP on Public Interface"
   default = true
