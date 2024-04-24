@@ -39,7 +39,7 @@ output "public_nlb_dns_name" {
   description = "The DNS Name of the public NLB"
 }
 output "nlb_web_url" {
-  value = "nlb web url: http://${aws_lb.public_nlb_az1[*].dns_name}"
+  value = length(aws_lb.public_nlb_az1) > 0 ? aws_lb.public_nlb_az1[0].dns_name : null
 }
 output "az1_web_url" {
   value = "linux az1 web url: http://${element(module.linux-instance-az1.public_eip, 0)}"
