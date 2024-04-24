@@ -316,23 +316,23 @@ resource "aws_lb" "public_nlb_az1" {
 
 resource "aws_lb_listener" "nlb_listener_http" {
   count                 = var.enable_nlb ? 1 : 0
-  load_balancer_arn     = aws_lb.public_nlb_az1.arn
+  load_balancer_arn     = aws_lb.public_nlb_az1[0].arn
   port                  = "80"
   protocol              = "TCP"
   default_action {
     type                = "forward"
-    target_group_arn    = aws_lb_target_group.private_nlb_target_group_http.arn
+    target_group_arn    = aws_lb_target_group.private_nlb_target_group_http[0].arn
   }
 }
 
 resource "aws_lb_listener" "nlb_listener_ssh" {
   count                 = var.enable_nlb ? 1 : 0
-  load_balancer_arn     = aws_lb.public_nlb_az1.arn
+  load_balancer_arn     = aws_lb.public_nlb_az1[0].arn
   port                  = "22"
   protocol              = "TCP"
   default_action {
     type                = "forward"
-    target_group_arn    = aws_lb_target_group.private_nlb_target_group_ssh.arn
+    target_group_arn    = aws_lb_target_group[0].private_nlb_target_group_ssh[0].arn
   }
 }
 
@@ -355,24 +355,24 @@ resource "aws_lb_target_group" "private_nlb_target_group_ssh" {
 
 resource "aws_lb_target_group_attachment" "nlb_target_az1_group_att_ssh" {
   count            = var.enable_nlb ? 1 : 0
-  target_group_arn = aws_lb_target_group.private_nlb_target_group_ssh.arn
+  target_group_arn = aws_lb_target_group[0].private_nlb_target_group_ssh[0].arn
   target_id        = module.linux-instance-az1.instance_id
 }
 
 resource "aws_lb_target_group_attachment" "nlb_target_az1_group_att_http" {
   count                 = var.enable_nlb ? 1 : 0
-  target_group_arn      = aws_lb_target_group.private_nlb_target_group_http.arn
+  target_group_arn      = aws_lb_target_group[0].private_nlb_target_group_http[0].arn
   target_id             = module.linux-instance-az1.instance_id
 }
 resource "aws_lb_target_group_attachment" "nlb_target_az2_group_att_ssh" {
   count                 = var.enable_nlb ? 1 : 0
-  target_group_arn      = aws_lb_target_group.private_nlb_target_group_ssh.arn
+  target_group_arn      = aws_lb_target_group[0].private_nlb_target_group_ssh[0].arn
   target_id             = module.linux-instance-az2.instance_id
 }
 
 resource "aws_lb_target_group_attachment" "nlb_target_az2_group_att_http" {
   count                 = var.enable_nlb ? 1 : 0
-  target_group_arn      = aws_lb_target_group.private_nlb_target_group_http.arn
+  target_group_arn      = aws_lb_target_group[0].private_nlb_target_group_http[0].arn
   target_id             = module.linux-instance-az2.instance_id
 }
 
