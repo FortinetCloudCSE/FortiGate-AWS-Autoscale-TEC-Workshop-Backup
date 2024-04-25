@@ -44,6 +44,13 @@ These are the AWS and Fortinet components that will be used during this workshop
   * AWS EC2 Instances (Ubuntu Linux OS)
   * A hybrid licensed Fortigate Autoscale Group. (BYOL for perpetual instances and PAYGO for autoscale instances)
 
+
+## Related Mantis Links
+
+    * https://mantis.fortinet.com/bug_view_page.php?bug_id=1021311
+    * https://mantis.fortinet.com/bug_view_page.php?bug_id=1021306
+    * https://mantis.fortinet.com/bug_view_page.php?bug_id=0971675 (resolved with build 11)
+
 ## AWS Reference Architecture Diagram
 
 This is the architecture and environment that will be used in the workshop.
