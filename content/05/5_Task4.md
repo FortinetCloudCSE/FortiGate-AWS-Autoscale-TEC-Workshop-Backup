@@ -146,8 +146,6 @@ weight: 1
 
   ![](image-t4-8.png)
 
-  ![](image-t4-9.png)
-
 * Now copy the fgt_config.conf file we want to use into the repository. Feel free to take a look to see what is preconfigured.
 * Now copy the license files you copied over and put them in ***license*** directory. 
 * Remove the example license file "license1.lic". The autoscale lambda function will mistakenly attach this file as a valid license if you leave it in the directory.
