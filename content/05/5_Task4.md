@@ -12,7 +12,7 @@ weight: 1
   * Substitute the keypair  and public IP into the command. 
   
   ``` scp -i <keypair> *.lic ubuntu@<public-ip>:~ ```
-* 
+
 ![](image-t4-0.png)
 
 * ssh into the Linux instance in AZ1 using the command in your scratchpad.
