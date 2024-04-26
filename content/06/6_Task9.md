@@ -50,16 +50,16 @@ weight: 1
 * Cleanup the terraform autoscale deployment. 
 ** ssh into the ec2 linux instance in AZ1
 
-    ``` ssh -i <keypair> ubuntu@<public ip> ```
+  ``` ssh -i <keypair> ubuntu@<public ip> ```
 
 ** cd to the deployment directory
 
-    ``` cd terraform-aws-cloud-modules/examples/spk_gwlb_asg_fgt_gwlb_igw/ ```
+  ``` cd terraform-aws-cloud-modules/examples/spk_gwlb_asg_fgt_gwlb_igw/ ```
 
 ** destroy the autoscale group using terraform destroy. (20-25 minutes)
 ** Wait for "destroy complete"
 
-    ``` terraform destroy --auto-approve ```
+  ``` terraform destroy --auto-approve ```
 
 ![](image-t9-12.png)
 
