@@ -1,19 +1,15 @@
 
 locals {
-  linux_inspection_az1_public_ip_address = cidrhost(local.public_subnet_cidr_az1, var.linux_host_ip)
+  linux_inspection_public_ip_address = cidrhost(local.public_subnet_cidr_az1, var.linux_host_ip)
 }
 locals {
-  linux_east_az1_ip_address = cidrhost(var.vpc_cidr_east_private_az1, var.linux_host_ip)
+  linux_east_ip_address = cidrhost(var.vpc_cidr_east_private, var.linux_host_ip)
 }
+
 locals {
-  linux_east_az2_ip_address = cidrhost(var.vpc_cidr_east_private_az2, var.linux_host_ip)
+  linux_west_ip_address = cidrhost(var.vpc_cidr_west_private, var.linux_host_ip)
 }
-locals {
-  linux_west_az1_ip_address = cidrhost(var.vpc_cidr_west_private_az1, var.linux_host_ip)
-}
-locals {
-  linux_west_az2_ip_address = cidrhost(var.vpc_cidr_west_private_az2, var.linux_host_ip)
-}
+
 locals {
   fortimanager_ip_address = cidrhost(local.public_subnet_cidr_az1, var.fortimanager_host_ip)
 }
@@ -49,20 +45,13 @@ data "template_file" "web_userdata_az1" {
     availability_zone     = var.availability_zone_1
   }
 }
-data "template_file" "web_userdata_az2" {
-  template = file("./config_templates/web-userdata.tpl")
-  vars = {
-    region                = var.aws_region
-    availability_zone     = var.availability_zone_2
-  }
-}
 
 data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20240228*"]
   }
 
   filter {
@@ -166,7 +155,7 @@ module "inspection_instance_jump_box" {
   enable_public_ips           = true
   availability_zone           = local.availability_zone_1
   public_subnet_id            = module.subnet-inspection-public-az1.id
-  public_ip_address           = local.linux_inspection_az1_public_ip_address
+  public_ip_address           = local.linux_inspection_public_ip_address
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
@@ -180,13 +169,13 @@ module "inspection_instance_jump_box" {
 # East Linux Instance for Generating East->West Traffic
 #
 
-module "east_instance_private_az1" {
+module "east_instance_private" {
   source                      = "git::https://github.com/40netse/terraform-modules.git//aws_ec2_instance"
   aws_ec2_instance_name       = "${var.cp}-${var.env}-east-private-az1-instance"
   enable_public_ips           = false
   availability_zone           = local.availability_zone_1
-  public_subnet_id            = module.subnet-east-private-az1.id
-  public_ip_address           = local.linux_east_az1_ip_address
+  public_subnet_id            = module.subnet-east-private.id
+  public_ip_address           = local.linux_east_ip_address
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
@@ -194,34 +183,18 @@ module "east_instance_private_az1" {
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az1.rendered
-}
-
-module "east_instance_private_az2" {
-  source                      = "git::https://github.com/40netse/terraform-modules.git//aws_ec2_instance"
-  aws_ec2_instance_name       = "${var.cp}-${var.env}-east-private-az2-instance"
-  enable_public_ips           = false
-  availability_zone           = local.availability_zone_2
-  public_subnet_id            = module.subnet-east-private-az2.id
-  public_ip_address           = local.linux_east_az2_ip_address
-  aws_ami                     = data.aws_ami.ubuntu.id
-  keypair                     = var.keypair
-  instance_type               = var.linux_instance_type
-  security_group_public_id    = module.ec2-east-sg.id
-  acl                         = var.acl
-  iam_instance_profile_id     = module.iam_profile.id
-  userdata_rendered           = data.template_file.web_userdata_az2.rendered
 }
 
 #
 # West Linux Instance for Generating West->East Traffic
 #
-module "west_instance_private_az1" {
+module "west_instance_private" {
   source                      = "git::https://github.com/40netse/terraform-modules.git//aws_ec2_instance"
   aws_ec2_instance_name       = "${var.cp}-${var.env}-west-private-az1-instance"
   enable_public_ips           = false
   availability_zone           = local.availability_zone_1
-  public_subnet_id            = module.subnet-west-private-az1.id
-  public_ip_address           = local.linux_west_az1_ip_address
+  public_subnet_id            = module.subnet-west-private.id
+  public_ip_address           = local.linux_west_ip_address
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
@@ -229,23 +202,6 @@ module "west_instance_private_az1" {
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az1.rendered
-}
-
-module "west_instance_private_az2" {
-  depends_on                  = [ module.vpc-transit-gateway-attachment-west ]
-  source                      = "git::https://github.com/40netse/terraform-modules.git//aws_ec2_instance"
-  aws_ec2_instance_name       = "${var.cp}-${var.env}-west-private-az2-instance"
-  enable_public_ips           = false
-  availability_zone           = local.availability_zone_2
-  public_subnet_id            = module.subnet-west-private-az2.id
-  public_ip_address           = local.linux_west_az2_ip_address
-  aws_ami                     = data.aws_ami.ubuntu.id
-  keypair                     = var.keypair
-  instance_type               = var.linux_instance_type
-  security_group_public_id    = module.ec2-west-sg.id
-  acl                         = var.acl
-  iam_instance_profile_id     = module.iam_profile.id
-  userdata_rendered           = data.template_file.web_userdata_az2.rendered
 }
 
 #
@@ -275,7 +231,7 @@ data "aws_ami" "fortimanager" {
 
   filter {
     name                         = "name"
-    values                       = ["FortiManager*VM64-AWS *(${var.fortimanager_os_version}) GA*"]
+    values                       = ["FortiManager*VM64-AWS *(${var.fortimanager_os_version})*"]
   }
 
   filter {

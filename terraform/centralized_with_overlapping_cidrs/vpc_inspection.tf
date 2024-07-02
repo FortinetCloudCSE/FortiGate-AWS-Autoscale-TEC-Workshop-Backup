@@ -74,7 +74,7 @@ resource "aws_nat_gateway" "vpc-inspection-az1" {
   allocation_id     = aws_eip.nat-gateway-inspection-az1.id
   subnet_id         = module.subnet-inspection-public-az1.id
   tags = {
-    Name = "${var.cp}-${var.env}-nat-gw-east-az1"
+    Name = "${var.cp}-${var.env}-nat-gw-inspection-az1"
   }
 }
 
@@ -82,7 +82,7 @@ resource "aws_nat_gateway" "vpc-inspection-az2" {
   allocation_id     = aws_eip.nat-gateway-inspection-az2.id
   subnet_id         = module.subnet-inspection-public-az2.id
   tags = {
-    Name = "${var.cp}-${var.env}-nat-gw-east-az2"
+    Name = "${var.cp}-${var.env}-nat-gw-inspection-az2"
   }
 }
 
