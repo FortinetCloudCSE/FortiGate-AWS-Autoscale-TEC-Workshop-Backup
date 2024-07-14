@@ -9,10 +9,9 @@ module "vpc-east" {
   vpc_cidr                   = var.vpc_cidr_east
 
 }
-
 module "subnet-east-public" {
   source = "git::https://github.com/40netse/terraform-modules.git//aws_subnet"
-  subnet_name                = "${var.cp}-${var.env}-east-private-subnet"
+  subnet_name                = "${var.cp}-${var.env}-east-public-subnet"
 
   vpc_id                     = module.vpc-east.vpc_id
   availability_zone          = local.availability_zone_1
@@ -65,6 +64,7 @@ module "route-table-association-east-public" {
   subnet_ids                 = module.subnet-east-public.id
   route_table_id             = module.route-table-east-public.id
 }
+#   transit_gateway_id     = module.vpc-transit-gateway.tgw_id
 resource "aws_route" "default-route-east-private" {
   depends_on             = [module.vpc-transit-gateway-attachment-east.tgw_attachment_id]
   route_table_id         = module.route-table-east-private.id
@@ -72,7 +72,7 @@ resource "aws_route" "default-route-east-private" {
   transit_gateway_id     = module.vpc-transit-gateway.tgw_id
 }
 
-resource "aws_nat_gateway" "vpc-east" {
+resource "aws_nat_gateway" "vpc-east-nat-gw" {
   subnet_id         = module.subnet-east-public.id
   connectivity_type = "private"
   tags = {

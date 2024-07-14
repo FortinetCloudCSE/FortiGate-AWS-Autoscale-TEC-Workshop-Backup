@@ -31,6 +31,9 @@ variable "cp" {
 variable "env" {
   description = "The Tag Environment to differentiate prod/test/dev"
 }
+variable "my_ip" {
+    description = "CIDR for my IP to restrict security group"
+}
 variable "vpc_cidr_inspection" {
     description = "CIDR for the whole inspection VPC"
 }

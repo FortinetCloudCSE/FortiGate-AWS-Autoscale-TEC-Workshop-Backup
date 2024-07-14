@@ -79,7 +79,6 @@ data "aws_ami" "ubuntu" {
 #
 # Security Groups are VPC specific, so an "ALLOW ALL" for each VPC
 #
-
 resource "aws_security_group" "ec2-jump-box-sg" {
   description = "Security Group for Linux Jump Box"
   vpc_id = module.vpc-inspection.vpc_id
@@ -88,7 +87,14 @@ resource "aws_security_group" "ec2-jump-box-sg" {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    cidr_blocks = [ "0.0.0.0/0" ]
+    cidr_blocks = [ var.my_ip ]
+  }
+  ingress {
+    description = "Allow HTTP from Anywhere IPv4 (change this to My IP)"
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = [ var.my_ip ]
   }
   ingress {
     description = "Allow Syslog from anywhere IPv4"
@@ -312,13 +318,49 @@ module "iam_profile" {
 #
 resource aws_security_group "fortimanager_sg" {
   name = "allow_public_subnets_fmg"
-  description = "Fortimanager Allow all traffic from public Subnets"
+  description = "Fortimanager Allow required ports from public Subnets"
   vpc_id = module.vpc-inspection.vpc_id
   ingress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow HTTP from Anywhere IPv4 (change this to My IP)"
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = [ var.my_ip ]
+  }
+  ingress {
+    description = "Allow HTTP from Anywhere IPv4 (change this to My IP)"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = [ var.my_ip ]
+  }
+  ingress {
+    description = "Allow Web Filter"
+    from_port = 8900
+    to_port = 8900
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+  ingress {
+    description = "Allow AV Query and GEO IP Service"
+    from_port = 8902
+    to_port = 8903
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+  ingress {
+    description = "Allow Cascade Mode"
+    from_port = 8891
+    to_port = 8891
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+  ingress {
+    description = "Allow HA Protocol"
+    from_port = 5199
+    to_port = 5199
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0" ]
   }
   egress {
     from_port = 0
@@ -327,7 +369,7 @@ resource aws_security_group "fortimanager_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "allow_public_subnets"
+    Name = "allow_fortimanager_required_ports"
   }
 }
 
@@ -347,14 +389,43 @@ module "fortimanager" {
 }
 
 resource aws_security_group "fortianalyzer_sg" {
-  name = "allow_public_subnets_faz"
-  description = "Fortianalyzer Allow all traffic from public Subnets"
+  name = "allow_faz_required_ports"
+  description = "Fortianalyzer Allow Required Ports"
   vpc_id = module.vpc-inspection.vpc_id
+    ingress {
+    description = "Allow HTTP from Anywhere IPv4 (change this to My IP)"
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = [ var.my_ip ]
+  }
   ingress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow HTTP from Anywhere IPv4 (change this to My IP)"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = [ var.my_ip ]
+  }
+  ingress {
+    description = "Allow Web Filter"
+    from_port = 8900
+    to_port = 8900
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+  ingress {
+    description = "Log Fetch TCP"
+    from_port = 514
+    to_port = 514
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+  ingress {
+    description = "Log Fetch UDP"
+    from_port = 514
+    to_port = 514
+    protocol = "udp"
+    cidr_blocks = [ "0.0.0.0/0" ]
   }
   egress {
     from_port = 0
@@ -363,7 +434,7 @@ resource aws_security_group "fortianalyzer_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "allow_public_subnets"
+    Name = "Allow FAZ required ports"
   }
 }
 

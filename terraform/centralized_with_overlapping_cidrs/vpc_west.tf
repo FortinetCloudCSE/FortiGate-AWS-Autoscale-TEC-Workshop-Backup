@@ -8,6 +8,11 @@ module "vpc-west" {
   vpc_name                   = "${var.cp}-${var.env}-west-vpc"
   vpc_cidr                   = var.vpc_cidr_west
 }
+module "vpc-igw-west" {
+  source = "git::https://github.com/40netse/terraform-modules.git//aws_igw"
+  igw_name                   = "${var.cp}-${var.env}-west-igw"
+  vpc_id                     = module.vpc-west.vpc_id
+}
 
 module "subnet-west-private" {
   source = "git::https://github.com/40netse/terraform-modules.git//aws_subnet"

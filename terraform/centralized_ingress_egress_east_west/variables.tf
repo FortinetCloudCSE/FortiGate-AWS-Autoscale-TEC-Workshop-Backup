@@ -25,6 +25,9 @@ variable "private_subnet_index" {
 variable "keypair" {
   description = "Keypair for instances that support keypairs"
 }
+variable "my_ip" {
+    description = "CIDR for my IP to restrict security group"
+}
 variable "cp" {
   description = "Customer Prefix to apply to all resources"
 }
