@@ -79,9 +79,75 @@ data "aws_ami" "ubuntu" {
 #
 # Security Groups are VPC specific, so an "ALLOW ALL" for each VPC
 #
-resource "aws_security_group" "ec2-linux-box-sg" {
+resource "aws_security_group" "ec2-linux-jump-box-sg" {
   description = "Security Group for Linux Jump Box"
   vpc_id = module.vpc-inspection.vpc_id
+  ingress {
+    description = "Allow SSH from Anywhere IPv4 (change this to My IP)"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west]
+  }
+  ingress {
+    description = "Allow HTTP from Anywhere IPv4 (change this to My IP)"
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west ]
+  }
+  ingress {
+    description = "Allow Syslog from anywhere IPv4"
+    from_port = 514
+    to_port = 514
+    protocol = "udp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+  egress {
+    description = "Allow egress ALL"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+}
+
+resource "aws_security_group" "ec2-east-linux-box-sg" {
+  description = "Security Group for East Linux Box"
+  vpc_id = module.vpc-east.vpc_id
+  ingress {
+    description = "Allow SSH from Anywhere IPv4 (change this to My IP)"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west]
+  }
+  ingress {
+    description = "Allow HTTP from Anywhere IPv4 (change this to My IP)"
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west ]
+  }
+  ingress {
+    description = "Allow Syslog from anywhere IPv4"
+    from_port = 514
+    to_port = 514
+    protocol = "udp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+  egress {
+    description = "Allow egress ALL"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+}
+
+resource "aws_security_group" "ec2-west-linux-box-sg" {
+  description = "Security Group for West Linux Box"
+  vpc_id = module.vpc-west.vpc_id
   ingress {
     description = "Allow SSH from Anywhere IPv4 (change this to My IP)"
     from_port = 22
