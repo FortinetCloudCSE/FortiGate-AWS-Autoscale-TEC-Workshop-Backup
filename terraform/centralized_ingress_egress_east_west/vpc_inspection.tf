@@ -350,17 +350,17 @@ resource "aws_route" "inspection-private-default-route-az2" {
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = aws_nat_gateway.vpc-inspection-az1.id
 }
-resource "aws_route" "inspection-private-spoke-route-az1" {
-  depends_on             = [module.vpc-transit-gateway-attachment-inspection.tgw_attachment_id]
-  route_table_id         = module.inspection-private-route-table-az1.id
-  destination_cidr_block = var.vpc_cidr_spoke
-  transit_gateway_id         = module.vpc-transit-gateway.tgw_id
-}
-resource "aws_route" "inspection-private-spoke-route-az2" {
-  depends_on             = [module.vpc-transit-gateway-attachment-inspection.tgw_attachment_id]
-  route_table_id         = module.inspection-private-route-table-az2.id
-  destination_cidr_block = var.vpc_cidr_spoke
-  transit_gateway_id         = module.vpc-transit-gateway.tgw_id
-}
+# resource "aws_route" "inspection-private-spoke-route-az1" {
+#   depends_on             = [module.vpc-transit-gateway-attachment-inspection.tgw_attachment_id]
+#   route_table_id         = module.inspection-private-route-table-az1.id
+#   destination_cidr_block = var.vpc_cidr_spoke
+#   transit_gateway_id         = module.vpc-transit-gateway.tgw_id
+# }
+# resource "aws_route" "inspection-private-spoke-route-az2" {
+#   depends_on             = [module.vpc-transit-gateway-attachment-inspection.tgw_attachment_id]
+#   route_table_id         = module.inspection-private-route-table-az2.id
+#   destination_cidr_block = var.vpc_cidr_spoke
+#   transit_gateway_id         = module.vpc-transit-gateway.tgw_id
+# }
 
 

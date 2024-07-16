@@ -37,6 +37,14 @@ cat >> /home/ubuntu/fgt_config.conf <<EOF
 # Geneve tunnel name will be with format 'geneve-az<NUMBER>'. Check 'az_name_map' of the output of template, which is map of Geneve tunnel name to the AZ name that supported in Security VPC.
 # Change port2 to port1 if fgt_intf_mode set to 1-arm.
 
+config system interface
+edit port1
+        set defaultgw disable
+    next
+    edit port2
+        set defaultgw enable
+    next
+end
 config system zone
     edit "geneve-tunnels"
         set interface "geneve-az1" "geneve-az2"
@@ -45,11 +53,13 @@ end
 
 config router static
     edit 0
+        set dst 192.168.0.0 255.255.0.0
         set distance 5
         set priority 100
         set device "geneve-az1"
     next
     edit 0
+        set dst 192.168.0.0 255.255.0.0
         set distance 5
         set priority 100
         set device "geneve-az2"

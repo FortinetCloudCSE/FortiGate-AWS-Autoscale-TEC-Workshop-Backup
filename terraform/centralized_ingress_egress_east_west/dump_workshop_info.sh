@@ -35,14 +35,14 @@ echo "    availability_zone = \"us-west-2c\""
 echo "  },"
 
 gwlbe_subnet_id_az1=`aws ec2 describe-subnets --region us-west-2 --filters Name=tag:Name,Values=$mytag-inspection-fwaas-az1-subnet --query "Subnets[0].SubnetId" --output text`
-echo "  fgt_gwlbe_us_west_2a = {"
+echo "  gwlbe_us_west_2a = {"
 echo "    id = \"$gwlbe_subnet_id_az1\""
 echo "    availability_zone = \"us-west-2a\""
 echo "  },"
 
 gwlbe_subnet_id_az2=`aws ec2 describe-subnets --region us-west-2 --filters Name=tag:Name,Values=$mytag-inspection-fwaas-az2-subnet --query "Subnets[0].SubnetId" --output text`
 
-echo "  fgt_gwlbe_us_west_2c = {"
+echo "  gwlbe_us_west_2c = {"
 echo "    id = \"$gwlbe_subnet_id_az2\""
 echo "    availability_zone = \"us-west-2c\""
 echo "  },"
