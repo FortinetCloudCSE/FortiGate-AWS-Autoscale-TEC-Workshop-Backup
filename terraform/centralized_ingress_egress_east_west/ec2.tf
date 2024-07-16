@@ -97,6 +97,13 @@ resource "aws_security_group" "ec2-linux-jump-box-sg" {
     cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west ]
   }
   ingress {
+    description = "Allow ICMP from connected CIDRs"
+    from_port = -1
+    to_port = -1
+    protocol = "icmp"
+    cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west ]
+  }
+  ingress {
     description = "Allow Syslog from anywhere IPv4"
     from_port = 514
     to_port = 514
@@ -130,6 +137,13 @@ resource "aws_security_group" "ec2-east-linux-box-sg" {
     cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west ]
   }
   ingress {
+    description = "Allow ICMP from connected CIDRs"
+    from_port = -1
+    to_port = -1
+    protocol = "icmp"
+    cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west ]
+  }
+  ingress {
     description = "Allow Syslog from anywhere IPv4"
     from_port = 514
     to_port = 514
@@ -160,6 +174,13 @@ resource "aws_security_group" "ec2-west-linux-box-sg" {
     from_port = 80
     to_port = 80
     protocol = "tcp"
+    cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west ]
+  }
+  ingress {
+    description = "Allow ICMP from connected CIDRs"
+    from_port = -1
+    to_port = -1
+    protocol = "icmp"
     cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west ]
   }
   ingress {
