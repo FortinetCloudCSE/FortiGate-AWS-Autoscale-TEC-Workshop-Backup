@@ -199,7 +199,7 @@ module "inspection_instance_jump_box" {
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
-  security_group_public_id    = aws_security_group.ec2-linux-box-sg.id
+  security_group_public_id    = aws_security_group.ec2-linux-jump-box-sg.id
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az1.rendered
@@ -219,7 +219,7 @@ module "east_instance_private_az1" {
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
-  security_group_public_id    = aws_security_group.ec2-linux-box-sg.id
+  security_group_public_id    = aws_security_group.ec2-east-linux-box-sg.id
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az1.rendered
@@ -235,7 +235,7 @@ module "east_instance_private_az2" {
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
-  security_group_public_id    = aws_security_group.ec2-linux-box-sg.id
+  security_group_public_id    = aws_security_group.ec2-east-linux-box-sg.id
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az2.rendered
@@ -254,7 +254,7 @@ module "west_instance_private_az1" {
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
-  security_group_public_id    = aws_security_group.ec2-linux-box-sg.id
+  security_group_public_id    = aws_security_group.ec2-west-linux-box-sg.id
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az1.rendered
@@ -271,7 +271,7 @@ module "west_instance_private_az2" {
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
-  security_group_public_id    = aws_security_group.ec2-linux-box-sg.id
+  security_group_public_id    = aws_security_group.ec2-west-linux-box-sg.id
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az2.rendered
