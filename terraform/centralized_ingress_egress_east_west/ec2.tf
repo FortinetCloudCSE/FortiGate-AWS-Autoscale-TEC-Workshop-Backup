@@ -79,7 +79,7 @@ data "aws_ami" "ubuntu" {
 #
 # Security Groups are VPC specific, so an "ALLOW ALL" for each VPC
 #
-resource "aws_security_group" "ec2-jump-box-sg" {
+resource "aws_security_group" "ec2-linux-box-sg" {
   description = "Security Group for Linux Jump Box"
   vpc_id = module.vpc-inspection.vpc_id
   ingress {
@@ -87,14 +87,14 @@ resource "aws_security_group" "ec2-jump-box-sg" {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    cidr_blocks = [ var.my_ip ]
+    cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west]
   }
   ingress {
     description = "Allow HTTP from Anywhere IPv4 (change this to My IP)"
     from_port = 80
     to_port = 80
     protocol = "tcp"
-    cidr_blocks = [ var.my_ip ]
+    cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west ]
   }
   ingress {
     description = "Allow Syslog from anywhere IPv4"
@@ -110,49 +110,6 @@ resource "aws_security_group" "ec2-jump-box-sg" {
     protocol = "-1"
     cidr_blocks = [ "0.0.0.0/0" ]
   }
-}
-
-module "ec2-inspection-sg" {
-  source                  = "git::https://github.com/40netse/terraform-modules.git//aws_security_group"
-  sg_name                 = "${var.cp}-${var.env}-${random_string.random.result}-east sg Allow Inspection Subnets"
-  vpc_id                  = module.vpc-inspection.vpc_id
-  ingress_to_port         = 0
-  ingress_from_port       = 0
-  ingress_protocol        = "-1"
-  ingress_cidr_for_access = "0.0.0.0/0"
-  egress_to_port          = 0
-  egress_from_port        = 0
-  egress_protocol         = "-1"
-  egress_cidr_for_access  = "0.0.0.0/0"
-}
-
-module "ec2-east-sg" {
-  source                  = "git::https://github.com/40netse/terraform-modules.git//aws_security_group"
-  sg_name                 = "${var.cp}-${var.env}-${random_string.random.result}-east sg Allow East Subnets"
-  vpc_id                  = module.vpc-east.vpc_id
-  ingress_to_port         = 0
-  ingress_from_port       = 0
-  ingress_protocol        = "-1"
-  ingress_cidr_for_access = "0.0.0.0/0"
-  egress_to_port          = 0
-  egress_from_port        = 0
-  egress_protocol         = "-1"
-  egress_cidr_for_access  = "0.0.0.0/0"
-}
-
-
-module "ec2-west-sg" {
-  source                  = "git::https://github.com/40netse/terraform-modules.git//aws_security_group"
-  sg_name                 = "${var.cp}-${var.env}-${random_string.random.result}-west sg Allow West Subnets"
-  vpc_id                  = module.vpc-west.vpc_id
-  ingress_to_port         = 0
-  ingress_from_port       = 0
-  ingress_protocol        = "-1"
-  ingress_cidr_for_access = "0.0.0.0/0"
-  egress_to_port          = 0
-  egress_from_port        = 0
-  egress_protocol         = "-1"
-  egress_cidr_for_access  = "0.0.0.0/0"
 }
 
 #
@@ -176,7 +133,7 @@ module "inspection_instance_jump_box" {
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
-  security_group_public_id    = aws_security_group.ec2-jump-box-sg.id
+  security_group_public_id    = aws_security_group.ec2-linux-box-sg.id
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az1.rendered
@@ -196,7 +153,7 @@ module "east_instance_private_az1" {
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
-  security_group_public_id    = module.ec2-east-sg.id
+  security_group_public_id    = aws_security_group.ec2-linux-box-sg.id
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az1.rendered
@@ -212,7 +169,7 @@ module "east_instance_private_az2" {
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
-  security_group_public_id    = module.ec2-east-sg.id
+  security_group_public_id    = aws_security_group.ec2-linux-box-sg.id
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az2.rendered
@@ -231,7 +188,7 @@ module "west_instance_private_az1" {
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
-  security_group_public_id    = module.ec2-west-sg.id
+  security_group_public_id    = aws_security_group.ec2-linux-box-sg.id
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az1.rendered
@@ -248,7 +205,7 @@ module "west_instance_private_az2" {
   aws_ami                     = data.aws_ami.ubuntu.id
   keypair                     = var.keypair
   instance_type               = var.linux_instance_type
-  security_group_public_id    = module.ec2-west-sg.id
+  security_group_public_id    = aws_security_group.ec2-linux-box-sg.id
   acl                         = var.acl
   iam_instance_profile_id     = module.iam_profile.id
   userdata_rendered           = data.template_file.web_userdata_az2.rendered

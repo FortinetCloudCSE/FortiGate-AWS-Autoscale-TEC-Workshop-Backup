@@ -15,13 +15,13 @@ weight: 2
 
 ![](image-t11-1.png)
 
-* ssh into the Linux instance in AZ1 using the command in your scratchpad.
+* ssh into the linux jump box using the command in your scratchpad.
 
   ``` ssh -i <keypair> ubuntu@<public-ip> ```
 
 ![](image-t11-2.png)
 
-* There are a number of tasks that take place due to the userdata template found in the cloudshell repo we just deployed. The details can be found in FortiGate-AWS-Autoscale-TEC-Workshop/terraform/distributed_ingress_nlb/config_templates/web-userdata.tpl. Before continuing with the autoscale deployment, we need to allow the userdata to complete. Monitor the output in /var/log/cloud-init-output.log. When it is finished, you should see the output stop with the following message. 
+* There are a number of tasks that are executed due to the userdata template found in the cloudshell repo we just deployed. The details can be found in FortiGate-AWS-Autoscale-TEC-Workshop/terraform/centralized_ingress_egress_east_west/config_templates/web-userdata.tpl. Before continuing with the autoscale deployment, we need to allow the userdata to complete. Monitor the output in /var/log/cloud-init-output.log. When it is finished, you should see the output stop with the following message. 
 * When the userdata configuration is complete, use ^C to exit from the "tail -f" command.
 
   ``` tail -f /var/log/cloud-init-output.log ```
@@ -183,7 +183,7 @@ weight: 2
 
 * The network diagram looks  something like this. In the next task, we will modify the route tables to redirect the traffic to the GWLB Endpoints, so the FortiGates will receive the connections for inspection.
 
-
+![](image-centralized_egress_with_ec2_gwlbe_no_markups.png)
 
 * This concludes this section.
 
