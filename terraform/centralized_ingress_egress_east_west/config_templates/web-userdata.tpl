@@ -64,6 +64,14 @@ config router static
         set priority 100
         set device "geneve-az2"
     next
+    edit 0
+        set dst 10.0.0.11 255.255.255.255
+        set device "geneve-az1"
+    next
+    edit 0
+        set dst 10.0.0.11 255.255.255.255
+        set device "geneve-az2"
+    next
 end
 
 config router policy

@@ -24,38 +24,6 @@ weight: 4
 
 ![](image-t13-2.png)
 
-* Choose the public route table for the inspection VPC in AZ1. 
-* Click on the "Routes" tab at the bottom. 
-* Click on "Edit routes".
-
-![](image-t13-3.png)
-
-* Change the route for the SPOKE CIDRs to point to the GWLBe in the same AZ. 
-  * In this example, the East Spoke CIDR is 192.168.0.0/24 and the West Spoke CIDR is 192.168.1.0/24. We are summarizing the CIDR with a route of 192.168.0.0/16. This may not work in a different deployment.
-  * Click "Save Changes".
-
-![](image-t13-4.png)
-
-* Return to the "Route Tables"  screen
-
-![](image-t13-5.png)
-
-* Choose the public route table for the inspection VPC in AZ2. 
-* Click on the "Routes" tab at the bottom. 
-* Click on "Edit routes".
-
-![](image-t13-6.png)
-
-* Change the route for the SPOKE CIDRs to point to the GWLBe in the same AZ. 
-  * In this example, the East Spoke CIDR is 192.168.0.0/24 and the West Spoke CIDR is 192.168.1.0/24. We are summarizing the CIDR with a route of 192.168.0.0/16. This may not work in a different deployment.
-  * Click "Save Changes".
-
-![](image-t13-7.png)
-
-* Return to the "Route Tables"  screen
-
-![](image-t13-5.png)
-
 * Choose the private route table for the inspection VPC in AZ1. 
 * Click on the "Routes" tab at the bottom. 
 * Click on "Edit routes".
@@ -81,6 +49,36 @@ weight: 4
 * Click "Save Changes".
 
 ![](image-t13-11.png)
+
+* Return to the "Route Tables"  screen
+
+![](image-t13-5.png)
+
+* Choose the fwaas route table for the inspection VPC in AZ1. 
+* Click on the "Routes" tab at the bottom. 
+* Click on "Edit routes".
+
+![](image-t13-12.png)
+
+* Change the default route to point to the GWLBe in the same AZ. The default route was pointing at the NAT Gateway to allow spoke instances access to the internet without firewall inspection. Redirecting the default route to the GWLB endpoint will send the traffic to the Fortigate for inspection.
+* Click "Save Changes".
+
+![](image-t13-13.png)
+
+* Return to the "Route Tables"  screen
+
+![](image-t13-5.png)
+
+* Choose the fwaas route table for the inspection VPC in AZ2. 
+* Click on the "Routes" tab at the bottom. 
+* Click on "Edit routes".
+
+![](image-t13-14.png)
+
+* Change the default route to point to the GWLBe in the same AZ. 
+* Click "Save Changes".
+
+![](image-t13-15.png)
 
 * Ingress and Egress traffic is now being sent to Fortigate ASG for inspection.
 

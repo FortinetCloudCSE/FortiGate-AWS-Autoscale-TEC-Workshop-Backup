@@ -231,6 +231,7 @@ module "inspection_instance_jump_box" {
 #
 
 module "east_instance_private_az1" {
+  depends_on                  = [ module.vpc-transit-gateway-attachment-east ]
   source                      = "git::https://github.com/40netse/terraform-modules.git//aws_ec2_instance"
   aws_ec2_instance_name       = "${var.cp}-${var.env}-east-private-az1-instance"
   enable_public_ips           = false
@@ -247,6 +248,7 @@ module "east_instance_private_az1" {
 }
 
 module "east_instance_private_az2" {
+  depends_on                  = [ module.vpc-transit-gateway-attachment-east ]
   source                      = "git::https://github.com/40netse/terraform-modules.git//aws_ec2_instance"
   aws_ec2_instance_name       = "${var.cp}-${var.env}-east-private-az2-instance"
   enable_public_ips           = false
@@ -266,6 +268,7 @@ module "east_instance_private_az2" {
 # West Linux Instance for Generating West->East Traffic
 #
 module "west_instance_private_az1" {
+  depends_on                  = [ module.vpc-transit-gateway-attachment-west ]
   source                      = "git::https://github.com/40netse/terraform-modules.git//aws_ec2_instance"
   aws_ec2_instance_name       = "${var.cp}-${var.env}-west-private-az1-instance"
   enable_public_ips           = false
