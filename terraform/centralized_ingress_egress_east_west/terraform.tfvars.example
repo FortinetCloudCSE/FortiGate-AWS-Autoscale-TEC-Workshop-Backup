@@ -26,8 +26,8 @@ my_ip                       = ""
 # cp (customer_prefix) and env (environment) prepended to all resources created by the template.
 # Used for identification. e.g. "<customer_prefix>-<prod/test/dev>"
 #
-cp                          = "tec-cnf"
-env                         = "lab"
+cp                          = "cse-tec"
+env                         = "test"
 vpc_cidr_inspection         = "10.0.0.0/16"
 
 vpc_cidr_jump_box           = "10.0.0.0/24"
