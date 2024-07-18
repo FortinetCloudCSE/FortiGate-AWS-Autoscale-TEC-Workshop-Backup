@@ -7,7 +7,7 @@ weight: 2
 
 ![](image-t11-0.png)
 
-* Using a slightly modified command in your scratchpad, let's scp copy our licenses to the linux instance in az1. This will be on the machine that you use to store your FortiGate licenses. We will use these licenses to attach to the byol instances used in the deployment. This workshop will use two licenses. We will move these licenses to the appropriate place in a later step. 
+* Using a slightly modified command in your scratchpad, let's scp copy our licenses to the jump box. This will be on the machine that you use to store your FortiGate licenses. We will use these licenses to attach to the byol instances used in the deployment. This workshop will use two licenses. We will move these licenses to the appropriate place in a later step. 
   * Locate your licenses and put them in your current directory.
   * Substitute the keypair  and public IP into the command. 
   
@@ -52,7 +52,7 @@ weight: 2
 
 * Change directory into the newly created repository and move to the examples/spk_gwlb_asg_fgt_gwlb_igw directory. This directory will deploy a Fortigate Autoscale group with a Gateway Load Balancer and gateway load balancer endpoints in the appropriate subnets of the distributed ingress workload vpc. 
 
-  ``` cd terraform-aws-cloud-modules/examples/spk_gwlb_asg_fgt_gwlb_igw ```
+  ``` cd terraform-aws-cloud-modules/examples/spk_tgw_gwlb_asg_fgt_igw ```
   
 * Copy the terraform.tfvars.example to terraform.tfvars
 

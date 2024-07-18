@@ -23,15 +23,15 @@ locals {
 
 resource "null_resource" "previous" {}
 
-resource "time_sleep" "wait_5_minutes" {
+resource "time_sleep" "wait_1_minutes" {
   depends_on = [ module.inspection_instance_jump_box ]
 
-  create_duration = "5m"
+  create_duration = "1m"
 }
 
 # This resource will create (at least) 30 seconds after null_resource.previous
 resource "null_resource" "next" {
-  depends_on = [time_sleep.wait_5_minutes]
+  depends_on = [time_sleep.wait_1_minutes]
 }
 
 #
@@ -231,7 +231,7 @@ module "inspection_instance_jump_box" {
 #
 
 module "east_instance_private_az1" {
-  depends_on                  = [time_sleep.wait_5_minutes]
+  depends_on                  = [time_sleep.wait_1_minutes]
   source                      = "git::https://github.com/40netse/terraform-modules.git//aws_ec2_instance"
   aws_ec2_instance_name       = "${var.cp}-${var.env}-east-private-az1-instance"
   enable_public_ips           = false
@@ -248,7 +248,7 @@ module "east_instance_private_az1" {
 }
 
 module "east_instance_private_az2" {
-  depends_on                  = [time_sleep.wait_5_minutes]
+  depends_on                  = [time_sleep.wait_1_minutes]
   source                      = "git::https://github.com/40netse/terraform-modules.git//aws_ec2_instance"
   aws_ec2_instance_name       = "${var.cp}-${var.env}-east-private-az2-instance"
   enable_public_ips           = false
@@ -268,7 +268,7 @@ module "east_instance_private_az2" {
 # West Linux Instance for Generating West->East Traffic
 #
 module "west_instance_private_az1" {
-  depends_on                  = [time_sleep.wait_5_minutes]
+  depends_on                  = [time_sleep.wait_1_minutes]
   source                      = "git::https://github.com/40netse/terraform-modules.git//aws_ec2_instance"
   aws_ec2_instance_name       = "${var.cp}-${var.env}-west-private-az1-instance"
   enable_public_ips           = false
@@ -285,7 +285,7 @@ module "west_instance_private_az1" {
 }
 
 module "west_instance_private_az2" {
-  depends_on                  = [time_sleep.wait_5_minutes]
+  depends_on                  = [time_sleep.wait_1_minutes]
   source                      = "git::https://github.com/40netse/terraform-modules.git//aws_ec2_instance"
   aws_ec2_instance_name       = "${var.cp}-${var.env}-west-private-az2-instance"
   enable_public_ips           = false

@@ -13,6 +13,15 @@ weight: 4
 **Note:** Changes to the route tables are in RED.
 {{% /notice %}}
 
+## ** Modify the following routes in the Inspection VPC Route Tables **
+|                        |    |    |
+|------------------------| ---- | ---- |
+| Route Table Name       | CIDR Block | Target |
+| inspection private AZ1 | 0.0.0.0/0 | GWLBe in AZ1 |
+| inspection private AZ2 | 0.0.0.0/0 | GWLBe in AZ2 |
+| inspection fwaas AZ1   | 0.0.0.0/0 | GWLBe in AZ1 |
+| inspection fwaas AZ2   | 0.0.0.0/0 | GWLBe in AZ2 |
+
 ![](image-mdw-cap-modified.png)
 
 * Log into your AWS account and navigate to the [**Console Home**](https://us-west-2.console.aws.amazon.com/console/home?region=us-west-2#).

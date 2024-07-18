@@ -65,7 +65,7 @@ This workshop is pre-configured in the terraform.tfvars to run in the us-west-2 
 ![](image-t10-4.png)
 ![](image-t10-4a.png)
 
-* Use "terraform apply --auto-approve" command to build the vpc. This command takes about 5 minutes to complete.
+* Use "terraform apply --auto-approve" command to build the vpc. This command takes about 10 minutes to complete.
 
 ``` terraform apply --auto-approve ```
 

@@ -26,22 +26,23 @@ weight: 5
       set srcintf "geneve-tunnels"
       set dstintf "geneve-tunnels"
       set action accept
-      set srcaddr "NorthAmerica"
+      set srcaddr "rfc-1918-subnets"
       set dstaddr "rfc-1918-subnets"
       set schedule "always"
       set service "ALL"
       set logtraffic all
   next
      edit 0
-      set name "egress"
+      set name "spoke_to_internet"
       set srcintf "geneve-tunnels"
-      set dstintf "geneve-tunnels"
+      set dstintf "port2"
       set action accept
       set srcaddr "rfc-1918-subnets"
       set dstaddr "NorthAmerica"
       set schedule "always"
       set service "ALL"
       set logtraffic all
+      set nat enable
   next 
   end
   
