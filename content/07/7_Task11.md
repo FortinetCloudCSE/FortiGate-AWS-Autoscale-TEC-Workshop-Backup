@@ -181,9 +181,9 @@ weight: 2
 
 ![](image-t11-17.png)
 
-* The network diagram looks  something like this. In the next task, we will modify the route tables to redirect the traffic to the GWLB Endpoints, so the FortiGates will receive the connections for inspection.
+* The network diagram looks like this. In the next task, we will modify the route tables to redirect the traffic to the GWLB Endpoints, so the FortiGates will receive the connections for inspection.
 
-![](image-centralized_egress_with_ec2_gwlbe_no_markups.png)
+![](image-centralized-egress_beginning.png)
 
 * This concludes this section.
 

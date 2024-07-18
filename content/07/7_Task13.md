@@ -22,8 +22,6 @@ weight: 4
 | inspection fwaas AZ1   | 0.0.0.0/0 | GWLBe in AZ1 |
 | inspection fwaas AZ2   | 0.0.0.0/0 | GWLBe in AZ2 |
 
-![](image-mdw-cap-modified.png)
-
 * Log into your AWS account and navigate to the [**Console Home**](https://us-west-2.console.aws.amazon.com/console/home?region=us-west-2#).
 * Click on the VPC icon
 

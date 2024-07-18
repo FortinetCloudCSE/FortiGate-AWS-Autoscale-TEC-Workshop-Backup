@@ -86,6 +86,6 @@ This workshop is pre-configured in the terraform.tfvars to run in the us-west-2 
 
 The network diagram for the centralized egress vpc looks like this:
 
-![](image-centralized-egress.png)
+![](image-centralized-egress_beginning.png)
 
 * This concludes this section.
