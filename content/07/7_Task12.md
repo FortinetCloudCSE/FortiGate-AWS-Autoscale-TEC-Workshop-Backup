@@ -9,7 +9,7 @@ weight: 3
 **Note:** You may notice that you have lost connectivity to your ec2 instance in AZ1. This is because the modified route tables are sending traffic to the GWLBe's and the Fortigate has a default "DENY ALL" policy. We will fix this in the next task.
 {{% /notice %}}
 
-![](image-centralized_egress_with_ec2_gwlbe.png)
+![](image-centralized-egress_beginning.png)
 
 * First, let's find the public IP of the primary instance of the FortiGate Autoscale Group. 
 * Login to the AWS console and go to the EC2 console
