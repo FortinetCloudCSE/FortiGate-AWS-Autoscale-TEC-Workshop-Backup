@@ -45,7 +45,7 @@ This workshop is pre-configured in the terraform.tfvars to run in the us-west-2 
 ![](image-t2-2b.png)
 
 {{% notice info %}}
-**Note:** You may change the default region in the terraform.tfvars file to another FortiGate CNF supported region if you don't have a valid keypair in that region and you don't want to create one for this workshop.
+**Note:** You may change the default region in the terraform.tfvars file to another FortiGate supported region if you don't have a valid keypair in that region and you don't want to create one for this workshop.
 {{% /notice %}}
 
 ![](image-t2-3.png)
