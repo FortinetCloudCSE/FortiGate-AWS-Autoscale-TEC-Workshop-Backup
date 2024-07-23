@@ -27,5 +27,5 @@ To complete the workshop, you will need an understanding of the following concep
     * AWS Cloudwatch
 * AWS Common Architecture Patterns
     * Distributed Ingress + Egress
-    * Centralized Egress + East-West (not used in this exercise)
+    * Centralized Egress + East-West 
 

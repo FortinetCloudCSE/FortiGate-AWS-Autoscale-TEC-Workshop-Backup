@@ -104,4 +104,8 @@ weight: 7
 
 ![](image-t16-16.png)
 
+* Cleanup the terraform state files and lock files.
+
+  ``` rm -rf .terraform .terraform.lock.hcl terraform.tfstate terraform.tfstate.backup ```
+
 * This concludes this section and the workshop is complete.

@@ -76,4 +76,8 @@ weight: 1
 
 ![](image-t9-15.png)
 
+* We will be using this AWS Cloudshell account in the next task to deploy a Centralized Egress VPC. Make sure you cleanup the .terraform directory in the distributed ingress directory or you will not be able to deploy the VPC in the next task, because off the 1 GB disk space limit in AWS Cloudshell.
+
+  ``` rm -rf .terraform .terraform.lock.hcl terraform.tfstate terraform.tfstate.backup ```
+
 * This concludes this section and the workshop is complete.
