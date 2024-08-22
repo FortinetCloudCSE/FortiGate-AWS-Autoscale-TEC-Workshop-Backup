@@ -23,7 +23,7 @@ locals {
 
 resource "null_resource" "previous" {}
 
-resource "time_sleep" "wait_1_minutes" {
+resource "time_sleep" "wait_5_minutes" {
   depends_on = [ module.inspection_instance_jump_box ]
 
   create_duration = "1m"
@@ -31,7 +31,7 @@ resource "time_sleep" "wait_1_minutes" {
 
 # This resource will create (at least) 30 seconds after null_resource.previous
 resource "null_resource" "next" {
-  depends_on = [time_sleep.wait_1_minutes]
+  depends_on = [time_sleep.wait_5_minutes]
 }
 
 #
