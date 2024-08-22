@@ -97,6 +97,20 @@ resource "aws_security_group" "ec2-linux-jump-box-sg" {
     cidr_blocks = [ var.my_ip, var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west ]
   }
   ingress {
+    description = "Allow FTP from CIDRs in VPC"
+    from_port = 21
+    to_port = 21
+    protocol = "tcp"
+    cidr_blocks = [ var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west]
+  }
+  ingress {
+    description = "Limit PASV ports from CIDRs in VPC"
+    from_port = 11090
+    to_port = 11100
+    protocol = "tcp"
+    cidr_blocks = [ var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west]
+  }
+  ingress {
     description = "Allow ICMP from connected CIDRs"
     from_port = -1
     to_port = -1
