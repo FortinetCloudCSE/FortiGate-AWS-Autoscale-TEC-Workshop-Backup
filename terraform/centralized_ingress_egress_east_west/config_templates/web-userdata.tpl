@@ -7,6 +7,7 @@ sudo apt -y install iperf3
 sudo apt -y install apache2
 sudo apt -y install lnav
 sudo apt -y install awscli
+apt-get install vsftpd
 sudo ufw allow 'Apache'
 sudo sed -i 's/It works!/It works for ${region}${availability_zone}!/' /var/www/html/index.html
 sudo systemctl start apache2
@@ -19,6 +20,18 @@ sudo sed -i 's/^#input(type="imudp" port="514")/input(type="imudp" port="514")/'
 sudo service rsyslog restart
 echo 'Welcome to ${region}${availability_zone} Fortigate CNF Workshop Demo' > /var/www/html/demo.txt
 echo 'X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*%' > /var/www/html/eicar.com.txt
+
+sudo sed -i 's/^anonymous_enable=YES/^anonymous_enable=NO/' /etc/vsftpd.conf
+sudo sed -i 's/^local_enable=NO/^local_enable=YES/' /etc/vsftpd.conf
+sudo sed -i 's/#write_enable=YES/^write_enable=YES/' /etc/vsftpd.conf
+sudo sed -i 's/#chroot_local_user=YES/^chroot_local_user=YES/' /etc/vsftpd.conf
+echo "allow_writeable_chroot=YES" >> /etc/vsftpd.conf
+echo "pasv_enable=Yes" >> /etc/vsftpd.conf
+echo "pasv_min_port=10090" >> /etc/vsftpd.conf
+echo "pasv_max_port=10100" >> /etc/vsftpd.conf
+sudo systemctl restart vsftpd.service
+systemctl enable vsftpd
+
 runuser -l ubuntu -c 'git clone https://github.com/tfutils/tfenv.git ~/.tfenv'
 runuser -l ubuntu -c 'mkdir ~/bin'
 runuser -l ubuntu -c 'ln -s ~/.tfenv/bin/* ~/bin'
