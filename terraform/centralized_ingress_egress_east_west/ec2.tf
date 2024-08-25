@@ -26,7 +26,7 @@ resource "null_resource" "previous" {}
 resource "time_sleep" "wait_5_minutes" {
   depends_on = [ module.inspection_instance_jump_box ]
 
-  create_duration = "1m"
+  create_duration = "5m"
 }
 
 # This resource will create (at least) 30 seconds after null_resource.previous
