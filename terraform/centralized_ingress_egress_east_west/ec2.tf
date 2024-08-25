@@ -213,8 +213,8 @@ resource "aws_security_group" "ec2-west-linux-box-sg" {
   }
   ingress {
     description = "Limit PASV ports from CIDRs in VPC"
-    from_port = 11090
-    to_port = 11100
+    from_port = 10090
+    to_port = 10100
     protocol = "tcp"
     cidr_blocks = [ var.vpc_cidr_inspection, var.vpc_cidr_east, var.vpc_cidr_west]
   }
