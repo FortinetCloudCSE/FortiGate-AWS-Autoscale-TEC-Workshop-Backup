@@ -7,7 +7,7 @@ sudo apt -y install iperf3
 sudo apt -y install apache2
 sudo apt -y install lnav
 sudo apt -y install awscli
-apt-get install vsftpd
+sudo apt -y install vsftpd
 sudo ufw allow 'Apache'
 sudo sed -i 's/It works!/It works for ${region}${availability_zone}!/' /var/www/html/index.html
 sudo systemctl start apache2
