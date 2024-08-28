@@ -38,8 +38,9 @@ jobs:
       - name: Build static app
         run: |
          CONT_ID=$(docker run -d \
-                  -v $(pwd):/home/UserRepo \
-                  --mount type=bind,source=$(pwd)/hugo.toml,target=/home/CentralRepo/hugo.toml \
+                  -v ${{github.workspace}}/layouts/:/home/UserRepo/layouts \
+                  -v ${{github.workspace}}/content/:/home/CentralRepo/content  \
+                  --mount type=bind,source=${{github.workspace}}/hugo.toml,target=/home/CentralRepo/hugo.toml \
                   fortinet-hugo:latest build)
          sleep 5
          rm -rf ${{github.workspace}}/docs
